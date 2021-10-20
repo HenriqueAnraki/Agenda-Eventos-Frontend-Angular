@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormValidationService } from '../shared/services/form-validation.service';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-users',
@@ -13,7 +14,8 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private formValidationService: FormValidationService
+    private formValidationService: FormValidationService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -25,11 +27,13 @@ export class UsersComponent implements OnInit {
 
   onSubmit() {
     // create user
-    console.log(this.form)
+    console.log(this.form.value)
 
     if (this.form.valid) {
       console.log('tudo certo!')
       // fazer login
+      this.userService.login(this.form.value)
+
     } else {
       console.log('Form Inválido!')
       this.formValidationService.verifyForm(this.form)
