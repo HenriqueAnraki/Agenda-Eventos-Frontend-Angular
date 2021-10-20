@@ -23,4 +23,10 @@ export class LoginComponent implements OnInit {
     console.log(this.form)
   }
 
+
+  // colocar em um serviço compartilhado
+  isFieldValid(field: any): boolean {
+    return !this.form.get(field)?.valid && (!!this.form.get(field)?.touched || !!this.form.get(field)?.dirty)
+  }
+
 }

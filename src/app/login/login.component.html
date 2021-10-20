@@ -2,22 +2,30 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-12">
-        <label for="email">Email:</label>
+        <label for="email">Email</label>
       </div>
       <div class="col-sm-12">
         <input type="email" class="form-control" id="email"
           formControlName="email" placeholder="your@email.com">
+        <app-field-control-error
+          errorMsg = "Email Inválido."
+          [showError] = "isFieldValid('email')">
+        </app-field-control-error>
       </div>
     </div>
   </div>
   <div class="form-group">
     <div class="row">
       <div class="col-sm-12">
-        <label for="password">Password</label>
+        <label for="password">Senha</label>
       </div>
       <div class="col-sm-12">
         <input type="password" class="form-control" id="password"
           formControlName="password">
+        <app-field-control-error
+          errorMsg = "Senha é obrigatória."
+          [showError] = "isFieldValid('password')">
+        </app-field-control-error>
       </div>
     </div>
   </div>
@@ -31,3 +39,5 @@
     </div>
   </div>
 </form>
+
+<app-form-debug [form]=form></app-form-debug>
