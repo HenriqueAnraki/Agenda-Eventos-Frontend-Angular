@@ -25,6 +25,15 @@ export class UsersComponent implements OnInit {
 
   onSubmit() {
     // create user
+    console.log(this.form)
+
+    if (this.form.valid) {
+      console.log('tudo certo!')
+      // fazer login
+    } else {
+      console.log('Form Inválido!')
+      this.formValidationService.verifyForm(this.form)
+    }
   }
 
   showFieldError(field: string) {

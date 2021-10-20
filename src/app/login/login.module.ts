@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { LoginService } from './login.service';
+import { FormValidationService } from '../shared/services/form-validation.service';
 
 
 
@@ -19,7 +20,8 @@ import { LoginService } from './login.service';
     RouterModule
   ],
   providers: [
-    LoginService
+    LoginService,
+    FormValidationService
   ]
 })
 export class LoginModule { }
