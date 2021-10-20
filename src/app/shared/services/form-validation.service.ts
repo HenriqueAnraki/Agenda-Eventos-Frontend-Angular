@@ -20,4 +20,10 @@ export class FormValidationService {
       }
     });
   }
+
+  errorCSS(field: string, form: FormGroup) {
+    return {
+      'is-invalid': this.isFieldInvalid(field, form)
+    }
+  }
 }

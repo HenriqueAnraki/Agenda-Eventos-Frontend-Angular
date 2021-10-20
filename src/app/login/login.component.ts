@@ -39,4 +39,8 @@ export class LoginComponent implements OnInit {
     return this.formValidationService.isFieldInvalid(field, this.form)
   }
 
+  applyErrorCSS(field: string){
+    return this.formValidationService.errorCSS(field, this.form)
+  }
+
 }

@@ -24,7 +24,8 @@
         </div>
         <div class="col-sm-12">
           <input type="password" class="form-control" id="password"
-            formControlName="password">
+            formControlName="password"
+            [ngClass] = "applyErrorCSS('password')">
           <app-field-control-error
             errorMsg = "Senha é obrigatória."
             [showError] = "showFieldError('password')">

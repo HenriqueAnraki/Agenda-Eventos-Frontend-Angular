@@ -45,9 +45,7 @@ export class UsersComponent implements OnInit {
   }
 
   applyErrorCSS(field: string){
-    return {
-      'is-invalid': this.showFieldError(field)
-    }
+    return this.formValidationService.errorCSS(field, this.form)
   }
 
 }
