@@ -3,16 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UsersComponent } from './users/users.component';
 import { EventsComponent } from './events/events.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from './login/login.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent,
     EventsComponent,
     HeaderComponent
   ],
@@ -20,7 +19,8 @@ import { LoginModule } from './login/login.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LoginModule
+    LoginModule,
+    UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

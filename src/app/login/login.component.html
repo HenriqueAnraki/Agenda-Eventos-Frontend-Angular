@@ -9,7 +9,7 @@
           formControlName="email" placeholder="your@email.com">
         <app-field-control-error
           errorMsg = "Email Inválido."
-          [showError] = "isFieldValid('email')">
+          [showError] = "showFieldError('email')">
         </app-field-control-error>
       </div>
     </div>
@@ -24,7 +24,7 @@
           formControlName="password">
         <app-field-control-error
           errorMsg = "Senha é obrigatória."
-          [showError] = "isFieldValid('password')">
+          [showError] = "showFieldError('password')">
         </app-field-control-error>
       </div>
     </div>
@@ -35,7 +35,8 @@
       <button type="submit" class="btn btn-primary">Login</button>
     </div>
     <div class="col-sm-2">
-      <button type="button" class="btn btn-primary">Create Account</button>
+      <a routerLink="/user" class="btn btn-primary">
+        Create Account</a>
     </div>
   </div>
 </form>
