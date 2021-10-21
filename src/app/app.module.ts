@@ -3,18 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventsComponent } from './events/events.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { AppConfigService } from './shared/services/app-config.service';
 import { HttpClientModule } from '@angular/common/http';
+import { EventsModule } from './events/events.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EventsComponent,
     HeaderComponent
   ],
   imports: [
@@ -23,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     LoginModule,
     UsersModule,
-    HttpClientModule
+    HttpClientModule,
+    EventsModule
   ],
   providers: [
     {

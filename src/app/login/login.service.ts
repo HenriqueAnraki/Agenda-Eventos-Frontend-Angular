@@ -48,12 +48,17 @@ export class LoginService {
     localStorage.setItem('token', token);
   }
 
-  private getToken() {
+  getToken() {
     return localStorage.getItem('token');
   }
 
   isUserAuth() {
     return this.getToken() ? true : false;
+  }
+
+  logout() {
+    localStorage.removeItem('token')
+    this.router.navigate(['/'])
   }
 
 }

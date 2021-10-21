@@ -1,1 +1,24 @@
-<p>events works!</p>
+<h3>Eventos!</h3>
+
+<ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError">
+    <li class="list-group-item" *ngFor="let userEvent of userEvents">
+        <b>Início: </b>{{ userEvent.begin | date : 'hh:mm dd/MM/yyyy'}}
+        <br>
+        <b>Fim: </b>{{ userEvent.end | date : 'hh:mm dd/MM/yyyy'}}
+        <br>
+        <b>Descrição: </b>{{ userEvent.description }}
+    </li>
+</ul>
+
+<ng-template #loadingError>
+    <div *ngIf="error$ | async; else loading">
+        Erro ao carregar!
+    </div>
+
+    <ng-template #loading>
+        <span>Carregando...</span>
+    </ng-template>
+</ng-template>
+
+<a class="btn btn-primary" (click)="addEvent()">Novo</a>
+<a class="btn btn-primary" (click)="logout()">Sair</a>
