@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormValidationService } from '../shared/services/form-validation.service';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +15,16 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private formValidationService: FormValidationService  
+    private formValidationService: FormValidationService,
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    if (this.loginService.isUserAuth()) {
+      this.router.navigate(['/events'])
+    }
+
     this.form = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required]
@@ -29,6 +37,7 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       console.log('tudo certo!')
       // fazer login
+      this.loginService.login(this.form.value)
     } else {
       console.log('Form Inválido!')
       this.formValidationService.verifyForm(this.form)

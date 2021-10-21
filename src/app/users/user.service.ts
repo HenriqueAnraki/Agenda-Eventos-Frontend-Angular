@@ -1,7 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AppConfigService } from '../shared/services/app-config.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UserService {
@@ -14,7 +16,8 @@ export class UserService {
 
   login(credentials: any) {
     // Como/onde criar constantes de configuração baseadas no enviroment?
-    let endpoint = this.appConfigService.apiEndpoint
+    // let endpoint = this.appConfigService.apiEndpoint
+    let endpoint = environment.apiEndpoint
     
     console.log(endpoint)
     
@@ -26,6 +29,8 @@ export class UserService {
         console.log('resposta do post: ')
         console.log(res)
         alert("Conta criada! Já pode usar a sua agenda!")
+
+        // [todo] o redirect faço aqui, ou no componente?
         this.router.navigate(['/login'])
       },
       (error: HttpErrorResponse) => {
