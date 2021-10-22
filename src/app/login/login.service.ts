@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ErrorHandler, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AppConfigService } from '../shared/services/app-config.service';
 import { environment } from 'src/environments/environment';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
 @Injectable()
 export class LoginService {
@@ -12,7 +13,7 @@ export class LoginService {
     private appConfigService: AppConfigService,
     private http: HttpClient,
     private router: Router,
-    private errorHandler: ErrorHandler
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   login(credentials: any) {
@@ -44,13 +45,13 @@ export class LoginService {
         console.log('error');
         console.log(error);
 
-        // this.errorHandler.handleError(error)
-        let errorMessage = error.error.text ?? error.error
-        if (!(typeof errorMessage === 'string')) {
-          errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
-        }
+        this.errorHandlerService.handleError(error)
+        // let errorMessage = error.error.text ?? error.error
+        // if (!(typeof errorMessage === 'string')) {
+        //   errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+        // }
 
-        alert(errorMessage);
+        // alert(errorMessage);
       })
   }
 

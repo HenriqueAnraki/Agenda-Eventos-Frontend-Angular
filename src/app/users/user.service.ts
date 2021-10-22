@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AppConfigService } from '../shared/services/app-config.service';
 import { environment } from 'src/environments/environment';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,8 @@ export class UserService {
   constructor(
     private appConfigService: AppConfigService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   login(credentials: any) {
@@ -36,13 +38,13 @@ export class UserService {
       (error: HttpErrorResponse) => {
         // tratar melhor os erros
         console.log(error)
+        this.errorHandlerService.handleError(error)
+        // let errorMessage = error.error.text ?? error.error
+        // if (!(typeof errorMessage === 'string')) {
+        //   errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+        // }
 
-        let errorMessage = error.error.text ?? error.error
-        if (!(typeof errorMessage === 'string')) {
-          errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
-        }
-
-        alert(errorMessage);
+        // alert(errorMessage);
       });
   }
 }

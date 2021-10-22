@@ -5,6 +5,7 @@ import { EventService } from './event.service';
 import { UserEvent } from './userEvent';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
 @Component({
   selector: 'app-events',
@@ -19,8 +20,30 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
+
+  refreshEvents() {
+    this.userEvents$ = this.eventService.getEvents()
+      .pipe(
+        catchError( (error: HttpErrorResponse) => {
+          console.error(error)
+          // alert(error.error.text ?? error.error)
+
+          this.errorHandlerService.handleError(error)
+          // let errorMessage = error.error.text ?? error.error
+          // if (!(typeof errorMessage === 'string')) {
+          //   errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+          // }
+
+          // alert(errorMessage);
+
+          this.error$.next(true);
+          return empty();
+        })
+      )
+  }
 
   ngOnInit(): void {
     // this.eventService.getEvents()
@@ -34,15 +57,8 @@ export class EventsComponent implements OnInit {
     //     alert(error.error.text ?? error.error)
     //   })
 
-    this.userEvents$ = this.eventService.getEvents()
-      .pipe(
-        catchError( error => {
-          console.error(error)
-          alert(error.error.text ?? error.error)
-          this.error$.next(true);
-          return empty();
-        })
-      )
+    this.refreshEvents()
+
     console.log('userE: ' + this.userEvents$)
   }
 
@@ -50,7 +66,14 @@ export class EventsComponent implements OnInit {
     this.authService.logout()
   }
 
-  addEvent() {
+  removeEvent(eventId: number) {
+    console.log('tentando remover evento id: ' + eventId)
+
+    this.eventService.deleteEvent(eventId)
+      .subscribe( (res) => {
+        console.log(res);
+        this.refreshEvents()
+      })
 
   }
 
