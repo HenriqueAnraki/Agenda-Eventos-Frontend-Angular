@@ -36,7 +36,13 @@ export class UserService {
       (error: HttpErrorResponse) => {
         // tratar melhor os erros
         console.log(error)
-        alert(error.error.text ?? error.error)
+
+        let errorMessage = error.error.text ?? error.error
+        if (!(typeof errorMessage === 'string')) {
+          errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+        }
+
+        alert(errorMessage);
       });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
 import { FormValidationService } from '../shared/services/form-validation.service';
 import { LoginService } from './login.service';
 
@@ -17,11 +18,12 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private formValidationService: FormValidationService,
     private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    if (this.loginService.isUserAuth()) {
+    if (this.authService.isUserAuth()) {
       this.router.navigate(['/events'])
     }
 

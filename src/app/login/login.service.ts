@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { ErrorHandler, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AppConfigService } from '../shared/services/app-config.service';
@@ -11,7 +11,8 @@ export class LoginService {
   constructor(
     private appConfigService: AppConfigService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private errorHandler: ErrorHandler
   ) { }
 
   login(credentials: any) {
@@ -27,6 +28,7 @@ export class LoginService {
       password: credentials.password
     }))
       .subscribe( (response: any) => {
+        console.log('response')
         console.log(response)
         // verify if response has 'troken
         if (response.token) {
@@ -39,8 +41,16 @@ export class LoginService {
         }
       },
       (error: HttpErrorResponse) => {
+        console.log('error');
         console.log(error);
-        alert(error.error.text ?? error.error);
+
+        // this.errorHandler.handleError(error)
+        let errorMessage = error.error.text ?? error.error
+        if (!(typeof errorMessage === 'string')) {
+          errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+        }
+
+        alert(errorMessage);
       })
   }
 
@@ -48,17 +58,5 @@ export class LoginService {
     localStorage.setItem('token', token);
   }
 
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  isUserAuth() {
-    return this.getToken() ? true : false;
-  }
-
-  logout() {
-    localStorage.removeItem('token')
-    this.router.navigate(['/'])
-  }
-
 }
+

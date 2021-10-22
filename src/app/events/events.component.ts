@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { empty, Observable, Subject } from 'rxjs';
-import { LoginService } from '../login/login.service';
 import { EventService } from './event.service';
 import { UserEvent } from './userEvent';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -19,7 +19,7 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private authService: LoginService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {

@@ -1,0 +1,71 @@
+<h3>Criar Evento</h3>
+
+<form [formGroup]="form" (ngSubmit) = "onSubmit()">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="desc">Descrição:</label>
+      </div>
+      <div class="col-sm-12">
+        <textarea type="desc" class="form-control" id="desc"
+          formControlName="desc"
+          [ngClass] = "applyErrorCSS('desc')"></textarea>
+        <app-field-control-error
+          errorMsg = "Descrição é obrigatória."
+          [showError] = "showFieldError('desc')">
+        </app-field-control-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="password">Início</label>
+      </div>
+      <div class="col-sm-12">
+        <input type="text" placeholder="DD/MM/YYYY" class="form-control"
+          id="beginDate" formControlName="beginDate"
+          [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
+          bsDatepicker>
+        <timepicker id="beginTime" formControlName="beginTime"
+          [showMeridian]=false></timepicker>
+        <app-field-control-error
+          errorMsg = "Início é obrigatório."
+          [showError] = "showFieldError('beginDate')">
+        </app-field-control-error>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="password">Fim</label>
+      </div>
+      <div class="col-sm-6">
+        <input type="text" placeholder="DD/MM/YYYY" class="form-control"
+          id="endDate" formControlName="endDate"
+          [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
+          bsDatepicker>
+        <timepicker id="endTime" formControlName="endTime"
+          [showMeridian]=false></timepicker>
+        <app-field-control-error
+          errorMsg = "Fim é obrigatório."
+          [showError] = "showFieldError('endDate')">
+        </app-field-control-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <!-- how to change to 'editar'? -->
+      <button type="submit" class="btn btn-primary">Criar</button>
+    </div>
+    <div class="col-sm-2">
+      <a routerLink="/user" class="btn btn-primary">
+        Cancelar</a>
+    </div>
+  </div>
+</form>
+
+<app-form-debug [form]=form></app-form-debug>

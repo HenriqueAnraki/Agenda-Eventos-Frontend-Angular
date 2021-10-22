@@ -2,9 +2,9 @@
 
 <ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError">
     <li class="list-group-item" *ngFor="let userEvent of userEvents">
-        <b>Início: </b>{{ userEvent.begin | date : 'hh:mm dd/MM/yyyy'}}
+        <b>Início: </b>{{ userEvent.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }}
         <br>
-        <b>Fim: </b>{{ userEvent.end | date : 'hh:mm dd/MM/yyyy'}}
+        <b>Fim: </b>{{ userEvent.end | date : 'HH:mm dd/MM/yyyy' : 'UTC' }}
         <br>
         <b>Descrição: </b>{{ userEvent.description }}
     </li>
@@ -20,5 +20,5 @@
     </ng-template>
 </ng-template>
 
-<a class="btn btn-primary" (click)="addEvent()">Novo</a>
+<a class="btn btn-primary" routerLink="/events/new">Novo</a>
 <a class="btn btn-primary" (click)="logout()">Sair</a>
