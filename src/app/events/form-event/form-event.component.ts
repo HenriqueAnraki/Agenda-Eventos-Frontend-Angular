@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/login/login.service';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
 import { EventService } from '../event.service';
 
@@ -19,7 +18,6 @@ export class FormEventComponent implements OnInit {
 
   constructor(
     private formValidationService: FormValidationService,
-    private loginService: LoginService,
     private router: Router,
     private formBuilder: FormBuilder,
     private eventService: EventService,

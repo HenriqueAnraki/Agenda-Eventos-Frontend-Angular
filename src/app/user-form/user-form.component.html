@@ -1,4 +1,4 @@
-<h3>Login</h3>
+<h3>{{ pageTitle }}</h3>
 
 <form [formGroup]="form" (ngSubmit) = "onSubmit()">
   <div class="form-group">
@@ -36,11 +36,11 @@
 
   <div class="row">
     <div class="col-sm-2">
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">{{ submitButtonText }}</button>
     </div>
     <div class="col-sm-2">
-      <a routerLink="/user" class="btn btn-primary">
-        Create Account</a>
+      <a (click) = "onClick()" class="btn btn-primary">
+        {{ secondaryButtonText }}</a>
     </div>
   </div>
 </form>

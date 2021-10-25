@@ -5,7 +5,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 import { EventsComponent } from './events.component';
-import { LoginService } from '../login/login.service';
 import { EventService } from './event.service';
 import { FormEventComponent } from './form-event/form-event.component';
 import { SharedModule } from '../shared/shared.module';
@@ -26,7 +25,6 @@ import { EventsRoutingModule } from './events-routing.module';
     TimepickerModule.forRoot()
   ],
   providers: [
-    LoginService,
     EventService
   ]
 })

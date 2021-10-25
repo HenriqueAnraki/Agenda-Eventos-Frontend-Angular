@@ -5,12 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginModule } from './login/login.module';
-import { UsersModule } from './users/users.module';
+
 import { AppConfigService } from './shared/services/app-config.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { ResponseErrorInterceptor } from './shared/interceptor/response-error.interceptor';
+import { UserFormModule } from './user-form/user-form.module';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,8 @@ import { ResponseErrorInterceptor } from './shared/interceptor/response-error.in
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    LoginModule,
-    UsersModule,
-    HttpClientModule
+    HttpClientModule,
+    UserFormModule
   ],
   providers: [
     {
