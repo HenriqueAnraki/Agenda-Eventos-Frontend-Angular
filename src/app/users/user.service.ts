@@ -30,15 +30,15 @@ export class UserService {
       password: credentials.password
     }))
     .pipe(
-      take(1),
-      catchError(
-        (error: HttpErrorResponse) => {
-          console.log(error);
+      take(1)// ,
+      // catchError(
+      //   (error: HttpErrorResponse) => {
+      //     console.log(error);
 
-          this.errorHandlerService.handleError(error)
-          return EMPTY
-        }
-      )
+      //     this.errorHandlerService.handleError(error)
+      //     return EMPTY
+      //   }
+      // )
     );
   }
 }

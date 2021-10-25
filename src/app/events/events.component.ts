@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { empty, Observable, Subject } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
 import { EventService } from './event.service';
 import { UserEvent } from './userEvent';
 import { catchError, tap } from 'rxjs/operators';
@@ -14,7 +14,6 @@ import { ErrorHandlerService } from '../shared/services/error-handler.service';
 })
 export class EventsComponent implements OnInit {
 
-  // userEvents!: UserEvent[];
   userEvents$!: Observable<UserEvent[]>;
   error$ = new Subject<boolean>();
 
@@ -30,34 +29,14 @@ export class EventsComponent implements OnInit {
         tap(res => console.log(res)),
         catchError( (error: HttpErrorResponse) => {
           console.error(error)
-          // alert(error.error.text ?? error.error)
-
-          this.errorHandlerService.handleError(error)
-          // let errorMessage = error.error.text ?? error.error
-          // if (!(typeof errorMessage === 'string')) {
-          //   errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
-          // }
-
-          // alert(errorMessage);
 
           this.error$.next(true);
-          return empty();
+          return EMPTY;
         })
       )
   }
 
   ngOnInit(): void {
-    // this.eventService.getEvents()
-    //   .subscribe( (res: UserEvent[]) => {
-    //     console.log('res')
-    //     console.log(res)
-    //     this.userEvents = res
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     console.log(error)
-    //     alert(error.error.text ?? error.error)
-    //   })
-
     this.refreshEvents()
 
     console.log('userE: ')

@@ -8,8 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
 import { AppConfigService } from './shared/services/app-config.service';
-import { HttpClientModule } from '@angular/common/http';
-import { EventsModule } from './events/events.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { ResponseErrorInterceptor } from './shared/interceptor/response-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,10 +23,15 @@ import { EventsModule } from './events/events.module';
     BrowserAnimationsModule,
     LoginModule,
     UsersModule,
-    HttpClientModule,
-    EventsModule
+    HttpClientModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: ResponseErrorInterceptor, multi: true
+    },
     {
       provide: APP_INITIALIZER,
       multi: true,

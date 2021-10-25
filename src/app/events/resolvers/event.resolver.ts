@@ -5,8 +5,8 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { EventService } from '../events/event.service';
-import { UserEvent } from '../events/userEvent';
+import { EventService } from '../event.service';
+import { UserEvent } from '../userEvent';
 
 @Injectable({
   providedIn: 'root'

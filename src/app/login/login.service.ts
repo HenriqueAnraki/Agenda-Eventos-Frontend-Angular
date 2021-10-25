@@ -1,12 +1,11 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AppConfigService } from '../shared/services/app-config.service';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
-import { catchError, take } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class LoginService {
@@ -19,7 +18,6 @@ export class LoginService {
   ) { }
 
   login(credentials: any) {
-    // let endpoint = this.appConfigService.apiEndpoint
     let endpoint = environment.apiEndpoint
     
     console.log(credentials)
@@ -31,15 +29,7 @@ export class LoginService {
       password: credentials.password
     }))
       .pipe(
-        take(1),
-        catchError(
-          (error: HttpErrorResponse) => {
-            console.log(error);
-
-            this.errorHandlerService.handleError(error)
-            return EMPTY
-          }
-        )
+        take(1)
       )
   }
 

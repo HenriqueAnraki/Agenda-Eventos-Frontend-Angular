@@ -8,13 +8,9 @@ import { EventsComponent } from './events.component';
 import { LoginService } from '../login/login.service';
 import { EventService } from './event.service';
 import { FormEventComponent } from './form-event/form-event.component';
-import { RouterModule } from '@angular/router';
-import { FieldControlErrorComponent } from '../shared/components/field-control-error/field-control-error.component';
-import { FormDebugComponent } from '../shared/components/form-debug/form-debug.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { EventsRoutingModule } from './events-routing.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    RouterModule,
+    EventsRoutingModule,
     SharedModule,
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),

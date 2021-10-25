@@ -26,7 +26,7 @@ export class FormEventComponent implements OnInit {
     private location: Location
   ) { }
 
-  getPreDateValue(date: any) {
+  getDateWithouTZ(date: any) {
     console.log('AQUI')
     console.log(date)
     if (date) {
@@ -54,8 +54,6 @@ export class FormEventComponent implements OnInit {
     if (!this.eventData && this.router.url.includes('/editar')) {
       this.onCancel()
     }
-    // console.log(this.router.url)
-
     console.log(this.eventData)
 
 
@@ -67,21 +65,19 @@ export class FormEventComponent implements OnInit {
         Validators.required
       ],
       beginDate: [
-        this.getPreDateValue(this.eventData?.begin),
+        this.getDateWithouTZ(this.eventData?.begin),
         Validators.required
       ],
       beginTime: [
-        // this.eventData?.begin.substring(0, this.eventData?.begin.length - 1) ?? new Date(),
-        this.getPreDateValue(this.eventData?.begin),
+        this.getDateWithouTZ(this.eventData?.begin),
         Validators.required
       ],
       endDate: [
-        this.getPreDateValue(this.eventData?.end), 
+        this.getDateWithouTZ(this.eventData?.end), 
         Validators.required
       ],
       endTime: [
-        // this.eventData?.end.substring(0, this.eventData?.begin.length - 1) ?? new Date(), 
-        this.getPreDateValue(this.eventData?.end),
+        this.getDateWithouTZ(this.eventData?.end),
         Validators.required
       ]
     })
@@ -133,7 +129,7 @@ ${this.parseTwoDigits(time.getMinutes())}:00`
       
       console.log(this.form.value)
 
-      this.eventData = { begin, end, description: this.form.value.desc, id: this.eventData.id }
+      this.eventData = { begin, end, description: this.form.value.desc, id: this.eventData?.id }
 
       // this.eventService.createEvent()
       this.eventService.saveEvent(this.eventData)
