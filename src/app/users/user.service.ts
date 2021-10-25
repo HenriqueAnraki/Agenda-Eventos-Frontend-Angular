@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
+import { catchError, take } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -16,7 +18,7 @@ export class UserService {
     private errorHandlerService: ErrorHandlerService
   ) { }
 
-  login(credentials: any) {
+  createAccount(credentials: any) {
     // Como/onde criar constantes de configuração baseadas no enviroment?
     // let endpoint = this.appConfigService.apiEndpoint
     let endpoint = environment.apiEndpoint
@@ -27,24 +29,16 @@ export class UserService {
       emailAddress: credentials.email,
       password: credentials.password
     }))
-      .subscribe( res => {
-        console.log('resposta do post: ')
-        console.log(res)
-        alert("Conta criada! Já pode usar a sua agenda!")
+    .pipe(
+      take(1),
+      catchError(
+        (error: HttpErrorResponse) => {
+          console.log(error);
 
-        // [todo] o redirect faço aqui, ou no componente?
-        this.router.navigate(['/login'])
-      },
-      (error: HttpErrorResponse) => {
-        // tratar melhor os erros
-        console.log(error)
-        this.errorHandlerService.handleError(error)
-        // let errorMessage = error.error.text ?? error.error
-        // if (!(typeof errorMessage === 'string')) {
-        //   errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
-        // }
-
-        // alert(errorMessage);
-      });
+          this.errorHandlerService.handleError(error)
+          return EMPTY
+        }
+      )
+    );
   }
 }

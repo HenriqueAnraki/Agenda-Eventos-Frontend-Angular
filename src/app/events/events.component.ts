@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { empty, Observable, Subject } from 'rxjs';
 import { EventService } from './event.service';
 import { UserEvent } from './userEvent';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
@@ -27,6 +27,7 @@ export class EventsComponent implements OnInit {
   refreshEvents() {
     this.userEvents$ = this.eventService.getEvents()
       .pipe(
+        tap(res => console.log(res)),
         catchError( (error: HttpErrorResponse) => {
           console.error(error)
           // alert(error.error.text ?? error.error)
@@ -59,7 +60,8 @@ export class EventsComponent implements OnInit {
 
     this.refreshEvents()
 
-    console.log('userE: ' + this.userEvents$)
+    console.log('userE: ')
+    console.log('this.userEvents')
   }
 
   logout() {

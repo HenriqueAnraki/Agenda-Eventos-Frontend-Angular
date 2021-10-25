@@ -40,6 +40,19 @@ export class LoginComponent implements OnInit {
       console.log('tudo certo!')
       // fazer login
       this.loginService.login(this.form.value)
+        .subscribe( (response: any) => {
+          console.log('response')
+          console.log(response)
+          // verify if response has 'troken
+          if (response.token) {
+            // setar token em algum lugar do browser
+            this.loginService.setToken(response.token)
+            // redirecionar para a pagina de eventos
+            this.router.navigate(['/events'])
+          } else {
+            alert('Email ou senha errado!')
+          }
+        })
     } else {
       console.log('Form Inválido!')
       this.formValidationService.verifyForm(this.form)

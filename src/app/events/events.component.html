@@ -3,7 +3,7 @@
 <ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError">
     <li class="list-group-item" *ngFor="let userEvent of userEvents">
         <a class="btn btn-primary float-right" (click)="removeEvent(userEvent.id)">Remover</a>
-        <a class="btn btn-primary float-right" [routerLink]="['/events', userEvent.id]">Editar</a>
+        <a class="btn btn-primary float-right" [routerLink]="['/events/editar', userEvent.id]" [state]="{ data: userEvent}">Editar</a>
         <b>Início: </b>{{ userEvent.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }}
         <br>
         <b>Fim: </b>{{ userEvent.end | date : 'HH:mm dd/MM/yyyy' : 'UTC' }}

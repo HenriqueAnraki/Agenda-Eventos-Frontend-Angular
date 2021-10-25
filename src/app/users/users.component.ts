@@ -40,7 +40,15 @@ export class UsersComponent implements OnInit {
     if (this.form.valid) {
       console.log('tudo certo!')
       // fazer login
-      this.userService.login(this.form.value)
+      this.userService.createAccount(this.form.value)
+        .subscribe( res => {
+          console.log('resposta do post: ')
+          console.log(res)
+          alert("Conta criada! Já pode usar a sua agenda!")
+
+          // [todo] o redirect faço aqui, ou no componente?
+          this.router.navigate(['/login'])
+        })
 
     } else {
       console.log('Form Inválido!')

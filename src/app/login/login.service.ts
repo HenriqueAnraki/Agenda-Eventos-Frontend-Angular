@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AppConfigService } from '../shared/services/app-config.service';
 import { environment } from 'src/environments/environment';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
+import { catchError, take } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class LoginService {
@@ -28,34 +30,20 @@ export class LoginService {
       emailAddress: credentials.email,
       password: credentials.password
     }))
-      .subscribe( (response: any) => {
-        console.log('response')
-        console.log(response)
-        // verify if response has 'troken
-        if (response.token) {
-          // setar token em algum lugar do browser
-          this.setToken(response.token)
-          // redirecionar para a pagina de eventos
-          this.router.navigate(['/events'])
-        } else {
-          alert('Email ou senha errado!')
-        }
-      },
-      (error: HttpErrorResponse) => {
-        console.log('error');
-        console.log(error);
+      .pipe(
+        take(1),
+        catchError(
+          (error: HttpErrorResponse) => {
+            console.log(error);
 
-        this.errorHandlerService.handleError(error)
-        // let errorMessage = error.error.text ?? error.error
-        // if (!(typeof errorMessage === 'string')) {
-        //   errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
-        // }
-
-        // alert(errorMessage);
-      })
+            this.errorHandlerService.handleError(error)
+            return EMPTY
+          }
+        )
+      )
   }
 
-  private setToken(token: string) {
+  setToken(token: string) {
     localStorage.setItem('token', token);
   }
 

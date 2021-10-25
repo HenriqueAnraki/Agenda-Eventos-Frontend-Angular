@@ -24,25 +24,63 @@ export class EventService {
 
     let headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);
 
-    return this.http.get<UserEvent>(`${this.endpoint}/`, { headers });
+    return this.http.get<UserEvent>(`${this.endpoint}/`, { headers }).pipe(take(1));
   }
 
-  createEvent(eventData: any) {
+  getEventById(eventId: number): any {
+    let token = this.authService.getToken();
+
+    let headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);
+
+    // [todo] create a router for get by id
+    return this.http.get<UserEvent>(`${this.endpoint}/event/${eventId}`, { headers }).pipe(take(1));
+  }
+
+  private createEvent(eventData: any) {
     console.log(eventData)
     let token = this.authService.getToken();
 
     let headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);
 
     return this.http.post<UserEvent>(`${this.endpoint}/`, eventData, { headers })
-      .subscribe( (res) => {
-        console.log(res);
-        this.router.navigate(['/events']);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
+      .pipe(
+        take(1),
+        catchError(
+          (error: HttpErrorResponse) => {
+            console.log(error);
 
-        this.errorHandlerService.handleError(error)
-      })
+            this.errorHandlerService.handleError(error)
+            return EMPTY
+          }
+        )
+      )
+  }
+
+  private updateEvent(eventData: any) {
+    console.log(eventData)
+    let token = this.authService.getToken();
+
+    let headers = new HttpHeaders().append('Authorization', `Bearer ${token}`);
+
+    return this.http.patch<UserEvent>(`${this.endpoint}/${eventData.id}`, eventData, { headers })
+      .pipe(
+        take(1),
+        catchError(
+          (error: HttpErrorResponse) => {
+            console.log(error);
+
+            this.errorHandlerService.handleError(error)
+            return EMPTY
+          }
+        )
+      )
+  }
+
+  saveEvent(eventData: UserEvent) {
+    if (eventData.id) {
+      return this.updateEvent(eventData)
+    }
+    return this.createEvent(eventData)
   }
 
   deleteEvent(eventId: number) {

@@ -27,7 +27,8 @@
         <input type="text" placeholder="DD/MM/YYYY" class="form-control"
           id="beginDate" formControlName="beginDate"
           [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-          bsDatepicker>
+          [bsValue]="bsBeginValue" bsDatepicker>
+
         <timepicker id="beginTime" formControlName="beginTime"
           [showMeridian]=false></timepicker>
         <app-field-control-error
@@ -45,7 +46,7 @@
         <input type="text" placeholder="DD/MM/YYYY" class="form-control"
           id="endDate" formControlName="endDate"
           [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-          bsDatepicker>
+          [bsValue]="bsEndValue" bsDatepicker>
         <timepicker id="endTime" formControlName="endTime"
           [showMeridian]=false></timepicker>
         <app-field-control-error
@@ -59,10 +60,11 @@
   <div class="row">
     <div class="col-sm-2">
       <!-- how to change to 'editar'? -->
-      <button type="submit" class="btn btn-primary">Criar</button>
+      <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
     <div class="col-sm-2">
-      <a routerLink="/user" class="btn btn-primary">
+      <!-- <a routerLink="/user" class="btn btn-primary"> -->
+        <a (click)="onCancel()" class="btn btn-primary">
         Cancelar</a>
     </div>
   </div>

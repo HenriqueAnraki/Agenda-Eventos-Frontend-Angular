@@ -7,7 +7,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { EventsComponent } from './events.component';
 import { LoginService } from '../login/login.service';
 import { EventService } from './event.service';
-import { CreateEventComponent } from './create-event/create-event.component';
+import { FormEventComponent } from './form-event/form-event.component';
 import { RouterModule } from '@angular/router';
 import { FieldControlErrorComponent } from '../shared/components/field-control-error/field-control-error.component';
 import { FormDebugComponent } from '../shared/components/form-debug/form-debug.component';
@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     EventsComponent,
-    CreateEventComponent
+    FormEventComponent
   ],
   imports: [
     CommonModule,
