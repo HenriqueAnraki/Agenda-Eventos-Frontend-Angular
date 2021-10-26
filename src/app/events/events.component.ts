@@ -7,6 +7,9 @@ import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
+/*
+  Component to show the user list of events
+*/
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -19,10 +22,13 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private authService: AuthService,
-    private errorHandlerService: ErrorHandlerService
+    private authService: AuthService
   ) { }
 
+  
+  /*
+    Get an updated list of events and handle error.
+  */
   refreshEvents() {
     this.userEvents$ = this.eventService.getEvents()
       .pipe(
@@ -38,15 +44,16 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshEvents()
-
-    console.log('userE: ')
-    console.log('this.userEvents')
   }
 
   logout() {
     this.authService.logout()
   }
 
+  /*
+    Remove an event and refresh the event list.
+    The refresh is necessary because the list isn't storeded locally, since we are using pipe async.
+  */
   removeEvent(eventId: number) {
     console.log('tentando remover evento id: ' + eventId)
 

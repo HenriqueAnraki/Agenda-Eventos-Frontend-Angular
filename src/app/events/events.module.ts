@@ -21,6 +21,7 @@ import { EventsRoutingModule } from './events-routing.module';
     EventsRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    // ngx-bootstrap dependencies
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot()
   ],

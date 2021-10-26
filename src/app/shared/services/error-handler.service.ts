@@ -11,6 +11,9 @@ export class ErrorHandlerService {
     private authService: AuthService
   ) { }
 
+  /*
+    Generic handler for http error response.
+  */
   handleError(error: HttpErrorResponse) {
     if (error.status === 403){
       alert('Sessão inválida!')

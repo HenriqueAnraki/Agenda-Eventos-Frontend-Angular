@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+/*
+Component that add a title at page top.
+*/
 @Component({
   selector: 'app-page-title',
   templateUrl: './page-title.component.html',

@@ -6,6 +6,11 @@ import { FormValidationService } from '../shared/services/form-validation.servic
 import { Location } from '@angular/common';
 import { UserFormService } from './services/user-form.service';
 
+/*
+  This component is used to:
+    -Login
+    -Create a new user
+*/
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -31,6 +36,7 @@ export class UserFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Initializing values based on the page (login or user)
     if (this.router.url.includes('/user') ) {
       this.isLogin = false;
       this.pageTitle = 'Criar Conta';
@@ -38,6 +44,7 @@ export class UserFormComponent implements OnInit {
       this.secondaryButtonText = 'Cancelar'
     }
 
+    // Authentication
     if (this.authService.isUserAuth()) {
       this.router.navigate(['/events'])
     }
@@ -53,11 +60,10 @@ export class UserFormComponent implements OnInit {
 
     if (this.form.valid) {
       console.log('tudo certo!')
+
       if (this.isLogin) {
-        // fazer login
         this.login()
       } else {
-        // Criar conta
         this.createUser()
       }
     } else {
@@ -74,6 +80,9 @@ export class UserFormComponent implements OnInit {
     return this.formValidationService.errorCSS(field, this.form)
   }
 
+  /*
+    Secondary button click handler
+  */
   onClick() {
     if (this.isLogin) {
       this.router.navigate(['/user'])
@@ -82,16 +91,19 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  /*
+    Send the user credentials to the server.
+    Set token and redirect the user to the next page if they are correct.
+  */
   login() {
     this.userFormService.login(this.form.value)
       .subscribe( (response: any) => {
         console.log('response')
         console.log(response)
-        // verify if response has 'troken
+
+        // verify if response has token
         if (response.token) {
-          // setar token em algum lugar do browser
           this.userFormService.setToken(response.token)
-          // redirecionar para a pagina de eventos
           this.router.navigate(['/events'])
         } else {
           alert('Email ou senha errado!')
@@ -99,6 +111,9 @@ export class UserFormComponent implements OnInit {
       })
   }
 
+  /*
+    Send a request to server and redirect the user to the login page if the account was created.
+  */
   createUser() {
     this.userFormService.createAccount(this.form.value)
       .subscribe( (res: any) => {

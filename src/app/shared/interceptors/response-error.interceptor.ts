@@ -10,6 +10,9 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ErrorHandlerService } from '../services/error-handler.service';
 
+/*
+  Http Request Interceptor to handle error response.
+*/
 @Injectable()
 export class ResponseErrorInterceptor implements HttpInterceptor {
 
@@ -26,7 +29,10 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
           console.log('errro inside interceptor');
           console.log(error);
 
+          // Handling the error
           this.errorHandlerService.handleError(error)
+
+          // Forwarding the error
           return throwError(error)
         }
       )

@@ -4,8 +4,9 @@ import { FieldControlErrorComponent } from './components/field-control-error/fie
 import { FormDebugComponent } from './components/form-debug/form-debug.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 
-
-
+/*
+General Module exporting all the general components.
+*/
 @NgModule({
   declarations: [
     FieldControlErrorComponent,

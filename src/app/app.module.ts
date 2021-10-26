@@ -30,18 +30,18 @@ import { UserFormModule } from './user-form/user-form.module';
     },
     {
       provide: HTTP_INTERCEPTORS, useClass: ResponseErrorInterceptor, multi: true
-    },
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      deps: [AppConfigService],
-      useFactory: (appConfigService: AppConfigService) => {
-        return () => {
-          //Make sure to return a promise!
-          return appConfigService.loadAppConfig();
-        };
-      }
-    }
+    }// , // Tentativa de utilizar variáveis de ambiente
+    // {
+    //   provide: APP_INITIALIZER,
+    //   multi: true,
+    //   deps: [AppConfigService],
+    //   useFactory: (appConfigService: AppConfigService) => {
+    //     return () => {
+    //       //Make sure to return a promise!
+    //       return appConfigService.loadAppConfig();
+    //     };
+    //   }
+    // }
   ],
   bootstrap: [AppComponent]
 })

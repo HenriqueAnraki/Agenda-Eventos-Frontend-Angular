@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
 import { EventService } from '../services/event.service';
 
+/*
+  Component used to create and edit an event.
+*/
 @Component({
   selector: 'app-form-event',
   templateUrl: './form-event.component.html',
@@ -26,29 +29,27 @@ export class FormEventComponent implements OnInit {
     private location: Location
   ) { }
 
+  /*
+    Function to process dates sent by the server.
+    Receive a UTC date, remove the 'Z' at the final and generete a new date.
+    This is needed because JS automatically converts the date to the local TZ, which could cause unwanted behaviors.
+  */
   getDateWithouTZ(date: any) {
     console.log('AQUI')
     console.log(date)
     if (date) {
       return new Date(date.substring(0, date.length - 1))
     }
-    // return null
     return new Date()
   }
 
-  ngOnInit(): void {
-    /*
-    // PROBLEMA: RESETA NO F5.
-    // Fazer solução 'ruim'. => pegar id e fazer http get
-      // resolver -> guarda de rota
-        // retorna um evento
-    // Falta fazer:
-        -mduar titulo d pagina
-          ->variavel com {{ }} no template
-        -mudar botão da pagina
-          ->ter os dois botoes e dar hdden em um deles?
-            ->ou da pra mudar o texto E o método click?
-    */
+  /*
+    Function to guarantee that the edit data is present.
+    Since we are using router state to send the data, there are possibilities to lose this data
+     (like manual refreshing the page).
+    In case the data was lost, the user is redirected to the /events page.
+  */
+  handleEditPageData() {
     this.eventData = history.state.data;
 
     if (this.router.url.includes('/editar')) {
@@ -59,10 +60,14 @@ export class FormEventComponent implements OnInit {
       this.pageTitle = 'Modificiar Evento'
     }
     console.log(this.eventData)
+  }
 
+  ngOnInit(): void {
+    this.handleEditPageData()
 
-    // substring method is used to cut off 'Z' that represents UTC time from the dateTime string
-    // This is done so JS don't forcefully apply the local TZ.
+    /*
+      Creating the form and setting the starting value if the user is in the /edit page.
+    */
     this.form = this.formBuilder.group({
       desc: [ 
         this.eventData?.description ?? null, 
@@ -95,6 +100,9 @@ export class FormEventComponent implements OnInit {
     return this.formValidationService.errorCSS(field, this.form)
   }
 
+  /*
+    Function to set a leading zero if necessary.
+  */
   parseTwoDigits(num: number) {
     if (num < 10) {
       return `0${num}`
@@ -102,6 +110,9 @@ export class FormEventComponent implements OnInit {
     return `${num}`
   }
 
+  /*
+    Merge date and time form fields data.
+  */
   mergeDateAndTime(date: Date, time: Date) {
     this.parseTwoDigits(date.getMonth())
     return `${date.getFullYear()}-\
@@ -135,7 +146,7 @@ ${this.parseTwoDigits(time.getMinutes())}:00`
 
       this.eventData = { begin, end, description: this.form.value.desc, id: this.eventData?.id }
 
-      // this.eventService.createEvent()
+      // Logic to handle New and Edit in the same form
       this.eventService.saveEvent(this.eventData)
       .subscribe( (res) => {
         console.log(res);

@@ -9,6 +9,9 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
+/*
+Http Request Interceptor to handle header authentication
+*/
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+/*
+Service to use configurable data without the need to build the entire app.
+*/
 @Injectable({
   providedIn: 'root'
 })

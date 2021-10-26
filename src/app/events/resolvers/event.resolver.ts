@@ -8,6 +8,9 @@ import { Observable, of } from 'rxjs';
 import { EventService } from '../services/event.service';
 import { UserEvent } from '../userEvent';
 
+/*
+  Resolver to fetch an Event data
+*/
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +22,7 @@ export class EventResolver implements Resolve<UserEvent> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     if (route.params && route.params.id) {
       console.log('resolver')
-      return this.eventService.getEventById(route.params.id);
+      // return this.eventService.getEventById(route.params.id);
     }
 
     return of({

@@ -4,6 +4,9 @@ import { ActivatedRouteSnapshot, CanActivate, CanLoad, Router, RouterStateSnapsh
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
+/*
+Guard to verify user authentication
+*/
 @Injectable({
   providedIn: 'root'
 })

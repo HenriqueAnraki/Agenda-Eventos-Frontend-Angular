@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+/* 
+Component to add a simple header.
+*/
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
