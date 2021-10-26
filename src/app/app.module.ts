@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppConfigService } from './shared/services/app-config.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
-import { ResponseErrorInterceptor } from './shared/interceptor/response-error.interceptor';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { ResponseErrorInterceptor } from './shared/interceptors/response-error.interceptor';
 import { UserFormModule } from './user-form/user-form.module';
 
 @NgModule({

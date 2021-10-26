@@ -1,10 +1,10 @@
-<h3>Criar Evento</h3>
+<app-page-title [title]='pageTitle'></app-page-title>
 
 <form [formGroup]="form" (ngSubmit) = "onSubmit()">
   <div class="form-group">
     <div class="row">
       <div class="col-sm-12">
-        <label for="desc">Descrição:</label>
+        <label for="desc" class="font-weight-bold">Descrição:</label>
       </div>
       <div class="col-sm-12">
         <textarea type="desc" class="form-control" id="desc"
@@ -20,49 +20,66 @@
 
   <div class="form-group">
     <div class="row">
-      <div class="col-sm-12">
-        <label for="password">Início</label>
-      </div>
-      <div class="col-sm-12">
-        <input type="text" placeholder="DD/MM/YYYY" class="form-control"
-          id="beginDate" formControlName="beginDate"
-          [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-          [bsValue]="bsBeginValue" bsDatepicker>
+      <div class="col-md-6">
 
-        <timepicker id="beginTime" formControlName="beginTime"
-          [showMeridian]=false></timepicker>
-        <app-field-control-error
-          errorMsg = "Início é obrigatório."
-          [showError] = "showFieldError('beginDate')">
-        </app-field-control-error>
+        <div class="row">
+          <div class="col">
+            <label for="password" class="font-weight-bold">Início</label>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-sm-6">
+            <input type="text" placeholder="DD/MM/YYYY" class="form-control"
+              id="beginDate" formControlName="beginDate"
+              [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
+              [bsValue]="bsBeginValue" bsDatepicker>
+          </div>
+          <div class="col-sm-6">
+            <timepicker id="beginTime" formControlName="beginTime"
+              [showMeridian]=false></timepicker>
+            <app-field-control-error
+              errorMsg = "Início é obrigatório."
+              [showError] = "showFieldError('beginDate')">
+            </app-field-control-error>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-md-6">
+
+        <div class="row">
+          <div class="col">
+            <label for="password" class="font-weight-bold">Fim</label>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-sm-6">
+            <input type="text" placeholder="DD/MM/YYYY" class="form-control"
+              id="endDate" formControlName="endDate"
+              [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
+              [bsValue]="bsEndValue" bsDatepicker>
+          </div>
+          <div class="col-sm-6">
+            <timepicker id="endTime" formControlName="endTime"
+              [showMeridian]=false></timepicker>
+            <app-field-control-error
+              errorMsg = "Fim é obrigatório."
+              [showError] = "showFieldError('endDate')">
+            </app-field-control-error>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <label for="password">Fim</label>
-      </div>
-      <div class="col-sm-6">
-        <input type="text" placeholder="DD/MM/YYYY" class="form-control"
-          id="endDate" formControlName="endDate"
-          [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-          [bsValue]="bsEndValue" bsDatepicker>
-        <timepicker id="endTime" formControlName="endTime"
-          [showMeridian]=false></timepicker>
-        <app-field-control-error
-          errorMsg = "Fim é obrigatório."
-          [showError] = "showFieldError('endDate')">
-        </app-field-control-error>
-      </div>
-    </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-2">
+  <div class="row justify-content-around">
+    <div class="col-xs">
       <!-- how to change to 'editar'? -->
       <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
-    <div class="col-sm-2">
+    <div class="col-xs">
       <!-- <a routerLink="/user" class="btn btn-primary"> -->
         <a (click)="onCancel()" class="btn btn-primary">
         Cancelar</a>

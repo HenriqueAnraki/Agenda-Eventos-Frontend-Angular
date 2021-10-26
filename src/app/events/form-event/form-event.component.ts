@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
-import { EventService } from '../event.service';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-form-event',
@@ -11,6 +11,8 @@ import { EventService } from '../event.service';
   styleUrls: ['./form-event.component.css']
 })
 export class FormEventComponent implements OnInit {
+  pageTitle: string = 'Novo Evento';
+  
   form!: FormGroup;
   eventData: any;
   bsBeginValue: any;
@@ -49,8 +51,12 @@ export class FormEventComponent implements OnInit {
     */
     this.eventData = history.state.data;
 
-    if (!this.eventData && this.router.url.includes('/editar')) {
-      this.onCancel()
+    if (this.router.url.includes('/editar')) {
+      if (!this.eventData) {
+        this.onCancel()
+      }
+
+      this.pageTitle = 'Modificiar Evento'
     }
     console.log(this.eventData)
 

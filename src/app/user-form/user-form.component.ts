@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { FormValidationService } from '../shared/services/form-validation.service';
 import { Location } from '@angular/common';
-import { UserFormService } from './user-form.service';
+import { UserFormService } from './services/user-form.service';
 
 @Component({
   selector: 'app-user-form',

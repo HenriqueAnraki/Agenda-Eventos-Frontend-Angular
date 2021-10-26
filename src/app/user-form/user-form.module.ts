@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormValidationService } from '../shared/services/form-validation.service';
-import { UserFormService } from './user-form.service';
+import { UserFormService } from './services/user-form.service';
 
 
 
