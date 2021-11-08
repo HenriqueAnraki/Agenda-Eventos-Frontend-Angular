@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { JwtHelperService } from '@auth0/angular-jwt'
+
+
 /*
 Functions related to Auth that need to be accessed throughout all the app.
 */
@@ -10,7 +13,8 @@ Functions related to Auth that need to be accessed throughout all the app.
 export class AuthService {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private jwtHelperService: JwtHelperService
   ) { }
 
   getToken() {
@@ -27,5 +31,17 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token')
     this.router.navigate(['/'])
+  }
+
+  getTokenValue() {
+    const token = this.getToken()
+
+    return this.jwtHelperService.decodeToken(<string>token)
+  }
+
+  getUserEmail() {
+    const tokenValue = this.getTokenValue()    
+
+    return tokenValue.email
   }
 }

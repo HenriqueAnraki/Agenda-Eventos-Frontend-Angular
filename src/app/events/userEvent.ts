@@ -3,5 +3,14 @@ export interface UserEvent {
     description: string,
     start: Date,
     end: Date,
-    userId: number
+    userId: number,
+    guests: [{
+        user: {
+            email: String
+        },
+        status: String
+    }],
+    owner: {
+        email: String
+    }
 }

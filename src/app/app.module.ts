@@ -12,6 +12,8 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { ResponseErrorInterceptor } from './shared/interceptors/response-error.interceptor';
 import { UserFormModule } from './user-form/user-form.module';
 
+import { JwtModule } from '@auth0/angular-jwt'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,12 @@ import { UserFormModule } from './user-form/user-form.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    UserFormModule
+    UserFormModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token')
+      }
+    })
   ],
   providers: [
     {

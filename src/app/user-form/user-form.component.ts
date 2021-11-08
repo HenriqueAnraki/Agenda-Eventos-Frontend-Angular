@@ -105,8 +105,6 @@ export class UserFormComponent implements OnInit {
         if (response.token) {
           this.userFormService.setToken(response.token)
           this.router.navigate(['/events'])
-        } else {
-          alert('Email ou senha errado!')
         }
       })
   }

@@ -9,8 +9,9 @@
     </div>
 </div>
 
-<ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError">
-    <li class="list-group-item" *ngFor="let userEvent of userEvents">
+<!-- <ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError"> -->
+<ul class="list-group list-group-flush" *ngIf = "userEventsTest else loadingError">
+    <li class="list-group-item" *ngFor="let userEvent of userEventsTest">
         <div class='row'>
             <div class='col-8'>
                 <!-- <b>Início: </b>{{ userEvent.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
@@ -20,6 +21,15 @@
                 <b>Fim: </b>{{ userEvent.end | date : 'HH:mm dd/MM/yyyy' }}
                 <br>
                 <b>Descrição: </b>{{ userEvent.description }}
+                <div *ngIf = "userEvent.guests.length > 1">
+                    <b>Dono: </b>{{ userEvent.owner.email }}
+                    <br>
+                    <b>Convidados: </b>
+                    <br>
+                    <div *ngFor="let guest of userEvent.guests">
+                        {{ guest.user.email }} - {{ guest.status }}
+                    </div>
+                </div>
             </div>
             <div class='col float-right'>
                 <a class="btn btn-secondary float-right" [routerLink]="['/events/editar', userEvent.id]" [state]="{ data: userEvent}">Editar</a>
