@@ -30,16 +30,16 @@
         <div class="row align-items-center">
           <div class="col-sm-6">
             <input type="text" placeholder="DD/MM/YYYY" class="form-control"
-              id="beginDate" formControlName="beginDate"
+              id="startDate" formControlName="startDate"
               [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-              [bsValue]="bsBeginValue" bsDatepicker>
+              [bsValue]="bsstartValue" bsDatepicker>
           </div>
           <div class="col-sm-6">
-            <timepicker id="beginTime" formControlName="beginTime"
+            <timepicker id="startTime" formControlName="startTime"
               [showMeridian]=false></timepicker>
             <app-field-control-error
               errorMsg = "Início é obrigatório."
-              [showError] = "showFieldError('beginDate')">
+              [showError] = "showFieldError('startDate')">
             </app-field-control-error>
           </div>
         </div>

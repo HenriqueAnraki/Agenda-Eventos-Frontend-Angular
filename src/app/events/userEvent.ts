@@ -1,7 +1,7 @@
 export interface UserEvent {
     id: number,
     description: string,
-    begin: Date,
+    start: Date,
     end: Date,
     userId: number
 }

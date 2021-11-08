@@ -13,17 +13,17 @@ const eventsRoutes: Routes = [
   },
   {
     path: 'new', component: FormEventComponent,
-    canActivate: [AuthGuard]// ,
-    // resolve: {
-    //   event: EventResolver
-    // }
+    canActivate: [AuthGuard],
+    resolve: {
+      event: EventResolver
+    }
   },
   {
     path: 'editar/:id', component: FormEventComponent,
-    canActivate: [AuthGuard]// ,
-    // resolve: {
-    //   event: EventResolver
-    // }
+    canActivate: [AuthGuard],
+    resolve: {
+      event: EventResolver
+    }
   }
 ];
 

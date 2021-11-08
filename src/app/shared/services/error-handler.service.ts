@@ -23,6 +23,13 @@ export class ErrorHandlerService {
       let errorMessage = error.error.message ?? error.error
       if (!(typeof errorMessage === 'string')) {
         errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+      } else {
+        const formErrors = error.error.options?.errors
+        if (formErrors) {
+          for (let i = 0; i < formErrors.length; i++) {
+            errorMessage += `\n${error.error.options.errors[i].message}`
+          }
+        }
       }
   
       alert(errorMessage);

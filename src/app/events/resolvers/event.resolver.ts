@@ -22,13 +22,13 @@ export class EventResolver implements Resolve<UserEvent> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     if (route.params && route.params.id) {
       console.log('resolver')
-      // return this.eventService.getEventById(route.params.id);
+      return this.eventService.getEventById(route.params.id);
     }
 
     return of({
       id: null,
       description: null,
-      begin: new Date(),
+      start: new Date(),
       end: new Date(),
       userId: null
     });

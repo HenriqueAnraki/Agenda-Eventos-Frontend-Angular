@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
 import { EventService } from '../services/event.service';
 
@@ -18,7 +18,7 @@ export class FormEventComponent implements OnInit {
   
   form!: FormGroup;
   eventData: any;
-  bsBeginValue: any;
+  bsstartValue: any;
   bsEndValue: any;
 
   constructor(
@@ -26,7 +26,8 @@ export class FormEventComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private eventService: EventService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) { }
 
   /*
@@ -53,6 +54,7 @@ export class FormEventComponent implements OnInit {
     this.eventData = history.state.data;
 
     if (this.router.url.includes('/editar')) {
+      // chamar request
       if (!this.eventData) {
         this.onCancel()
       }
@@ -63,30 +65,39 @@ export class FormEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.handleEditPageData()
+    // this.handleEditPageData()
+
+    this.eventData = this.route.snapshot.data['event']
+    console.log('evento do guard')
+    console.log(this.eventData)
 
     /*
       Creating the form and setting the starting value if the user is in the /edit page.
     */
     this.form = this.formBuilder.group({
       desc: [ 
-        this.eventData?.description ?? null, 
+        // this.eventData?.description ?? null,
+        this.eventData.description,
         Validators.required
       ],
-      beginDate: [
-        this.getDateWithouTZ(this.eventData?.begin),
+      startDate: [
+        // this.getDateWithouTZ(this.eventData?.startTZ),
+        new Date(this.eventData.start),
         Validators.required
       ],
-      beginTime: [
-        this.getDateWithouTZ(this.eventData?.begin),
+      startTime: [
+        // this.getDateWithouTZ(this.eventData?.startTZ),
+        new Date(this.eventData.start),
         Validators.required
       ],
       endDate: [
-        this.getDateWithouTZ(this.eventData?.end), 
+        // this.getDateWithouTZ(this.eventData?.endTZ),
+        new Date(this.eventData.end),
         Validators.required
       ],
       endTime: [
-        this.getDateWithouTZ(this.eventData?.end),
+        // this.getDateWithouTZ(this.eventData?.endTZ),
+        new Date(this.eventData.end),
         Validators.required
       ]
     })
@@ -125,26 +136,26 @@ ${this.parseTwoDigits(time.getMinutes())}:00`
   onSubmit() {
     if (this.form.valid) {
       // create event
-      let beginDate: Date = this.form.value['beginDate']
-      let beginTime: Date = this.form.value['beginTime']
+      let startDate: Date = this.form.value['startDate']
+      let startTime: Date = this.form.value['startTime']
       let endDate: Date = this.form.value['endDate']
       let endTime: Date = this.form.value['endTime']
 
-      console.log(beginDate)
-      console.log(beginTime)
+      console.log(startDate)
+      console.log(startTime)
       console.log(endDate)
       console.log(endTime)
 
-      let begin = this.mergeDateAndTime(beginDate, beginTime)
+      let start = this.mergeDateAndTime(startDate, startTime)
       let end = this.mergeDateAndTime(endDate, endTime)
 
       console.log('finals')
-      console.log(begin)
+      console.log(start)
       console.log(end)
       
       console.log(this.form.value)
 
-      this.eventData = { begin, end, description: this.form.value.desc, id: this.eventData?.id }
+      this.eventData = { start, end, description: this.form.value.desc, id: this.eventData?.id }
 
       // Logic to handle New and Edit in the same form
       this.eventService.saveEvent(this.eventData)
