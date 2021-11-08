@@ -11,7 +11,7 @@
 
 <!-- <ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError"> -->
 <ul class="list-group list-group-flush" *ngIf = "userEventsTest else loadingError">
-    <li class="list-group-item" *ngFor="let userEvent of userEventsTest">
+    <li class="list-group-item" *ngFor="let userEvent of userEventsTest, let userEventIndex = index">
         <div class='row'>
             <div class='col-8'>
                 <!-- <b>Início: </b>{{ userEvent.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
@@ -35,7 +35,7 @@
                 <a class="btn btn-secondary float-right" [routerLink]="['/events/editar', userEvent.id]" [state]="{ data: userEvent}">Editar</a>
             </div>
             <div class='col float-right'>
-                <a class="btn btn-danger float-right" (click)="removeEvent(userEvent.id)">Remover</a>
+                <a class="btn btn-danger float-right" (click)="removeEvent(userEvent.id, userEventIndex)">Remover</a>
             </div>
         </div>
     </li>

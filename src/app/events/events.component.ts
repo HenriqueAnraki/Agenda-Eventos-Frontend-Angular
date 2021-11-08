@@ -29,23 +29,6 @@ export class EventsComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  
-  /*
-    Get an updated list of events and handle error.
-  */
-  refreshEvents() {
-    this.userEvents$ = this.eventService.getEvents()
-      .pipe(
-        tap(res => console.log(res)),
-        catchError( (error: HttpErrorResponse) => {
-          console.error(error)
-
-          this.error$.next(true);
-          return EMPTY;
-        })
-      )
-  }
-
   translateStatus(status: String) {
     switch (status) {
       case 'refused':
@@ -60,8 +43,6 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshEvents()
-
     this.eventService.getEvents()
       .pipe(
         catchError( (error: HttpErrorResponse) => {
@@ -97,13 +78,14 @@ export class EventsComponent implements OnInit {
     Remove an event and refresh the event list.
     The refresh is necessary because the list isn't storeded locally, since we are using pipe async.
   */
-  removeEvent(eventId: number) {
+  removeEvent(eventId: number, userEventIndex: number) {
     console.log('tentando remover evento id: ' + eventId)
+    console.log('tentando remover evento de index: ' + userEventIndex)
 
     this.eventService.deleteEvent(eventId)
       .subscribe( (res) => {
         console.log(res);
-        this.refreshEvents()
+        this.userEventsTest.splice(userEventIndex, 1)
       })
   }
 
