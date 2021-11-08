@@ -19,7 +19,8 @@ export class ErrorHandlerService {
       alert('Sessão inválida!')
       this.authService.logout()
     } else {
-      let errorMessage = error.error.text ?? error.error
+      // let errorMessage = error.error.text ?? error.error
+      let errorMessage = error.error.message ?? error.error
       if (!(typeof errorMessage === 'string')) {
         errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
       }

@@ -19,10 +19,7 @@ export class UserFormService {
     
     console.log(credentials)
 
-    return this.http.post(`${endpoint}/login`, JSON.stringify({
-      emailAddress: credentials.email,
-      password: credentials.password
-    }))
+    return this.http.post(`${endpoint}/users/login`, credentials)
       .pipe(
         take(1)
       )
