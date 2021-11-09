@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../shared/services/auth.service';
 
 /* 
 Component to add a simple header.
@@ -9,9 +10,15 @@ Component to add a simple header.
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor() { }
+
+  userEmail!: String
+
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.userEmail = this.authService.getUserEmail()
   }
 
 }

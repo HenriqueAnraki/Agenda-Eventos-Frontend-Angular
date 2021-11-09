@@ -12,5 +12,6 @@ export interface UserEvent {
     }],
     owner: {
         email: String
-    }
+    },
+    myStatus: String
 }

@@ -5,6 +5,7 @@ import { FormEventComponent } from './form-event/form-event.component';
 import { EventsComponent } from './events.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { EventResolver } from './resolvers/event.resolver';
+import { GuestsComponent } from './guests/guests.component';
 
 const eventsRoutes: Routes = [
   {
@@ -20,6 +21,13 @@ const eventsRoutes: Routes = [
   },
   {
     path: 'editar/:id', component: FormEventComponent,
+    canActivate: [AuthGuard],
+    resolve: {
+      event: EventResolver
+    }
+  },
+  {
+    path: ':id/guests', component: GuestsComponent,
     canActivate: [AuthGuard],
     resolve: {
       event: EventResolver

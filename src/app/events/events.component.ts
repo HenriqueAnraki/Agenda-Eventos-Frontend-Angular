@@ -57,9 +57,14 @@ export class EventsComponent implements OnInit {
         this.userEventsTest = res
 
         for (let i = 0; i < this.userEventsTest.length; i++) {
-          const guests = this.userEventsTest[i].guests;
+          const userEvent = this.userEventsTest[i]
+          const guests = userEvent.guests;
           for (let j = 0; j < guests.length; j++) {
+            if (guests[j].user.email === this.userEmail) {
+              userEvent.myStatus = guests[j].status
+            }
             guests[j].status = this.translateStatus(guests[j].status);
+
           }
         }
       })
@@ -87,6 +92,36 @@ export class EventsComponent implements OnInit {
         console.log(res);
         this.userEventsTest.splice(userEventIndex, 1)
       })
+  }
+
+  private answernEventInvite(eventId: number, userEventIndex: number, answer: string) {
+    // call endpoint
+    this.eventService.answerInvite(eventId, answer)
+      .subscribe( (res) => {
+        // refresh eventlist
+        console.log(res);
+        if (answer === 'refused') {
+          this.userEventsTest.splice(userEventIndex, 1)
+        } else {
+          const userEvent = this.userEventsTest[userEventIndex]
+          const guests = userEvent.guests
+          for (let i = 0; i < guests.length; i++) {
+            if (guests[i].user.email === this.userEmail) {
+              userEvent.myStatus = answer
+            }
+            guests[i].status = this.translateStatus(answer); 
+          }
+        }
+      })
+  }
+
+  confirm(eventId: number, userEventIndex: number) {
+    this.answernEventInvite(eventId, userEventIndex, 'confirmed')
+    
+  }
+
+  refuse(eventId: number, userEventIndex: number) {
+    this.answernEventInvite(eventId, userEventIndex, 'refused')
   }
 
 }

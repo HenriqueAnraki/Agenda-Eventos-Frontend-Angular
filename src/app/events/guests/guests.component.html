@@ -1,0 +1,64 @@
+<app-page-title title='Convites'></app-page-title>
+
+<ul class="list-group list-group-flush" *ngIf = "userEventData">
+  <li class="list-group-item">
+      <div class='row'>
+          <div class='col-8'>
+              <!-- <b>Início: </b>{{ userEventData.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
+              <b>Início: </b>{{ userEventData.start | date : 'HH:mm dd/MM/yyyy' }}
+              <br>
+              <!-- <b>Fim: </b>{{ userEventData.end | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
+              <b>Fim: </b>{{ userEventData.end | date : 'HH:mm dd/MM/yyyy' }}
+              <br>
+              <b>Descrição: </b>{{ userEventData.description }}
+              <div *ngIf = "userEventData.guests.length > 1">
+                  <b>Dono: </b>{{ userEventData.owner.email }}
+                  <br>
+                  <b>Convidados: </b>
+                  <br>
+                  <div *ngFor="let guest of userEventData.guests">
+                      {{ guest.user.email }} - {{ guest.status }}
+                  </div>
+              </div>
+          </div>
+      </div>
+  </li>
+</ul>
+
+<form [formGroup]="form" (ngSubmit) = "onSubmit()">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="userEmail" class="font-weight-bold">Usuário a ser convidado:</label>
+      </div>
+      <div class="col-sm-12">
+          <input type="userEmail" class="form-control" id="userEmail"
+            formControlName="userEmail" placeholder="user@email.com"
+            [ngClass] = "applyErrorCSS('userEmail')">
+          <app-field-control-error
+            errorMsg = "Email do usuário é obrigatório."
+            [showError] = "showFieldError('userEmail')">
+        </app-field-control-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+
+
+  </div>
+
+  <div class="row justify-content-around">
+    <div class="col-xs">
+      <!-- how to change to 'editar'? -->
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+    <div class="col-xs">
+      <!-- <a routerLink="/user" class="btn btn-primary"> -->
+        <a class="btn btn-primary" (click)="onCancel()">
+        Cancelar</a>
+    </div>
+  </div>
+</form>
+
+<app-form-debug [form]=form></app-form-debug>

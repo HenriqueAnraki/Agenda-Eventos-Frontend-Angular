@@ -10,11 +10,13 @@ import { FormEventComponent } from './form-event/form-event.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EventsRoutingModule } from './events-routing.module';
+import { GuestsComponent } from './guests/guests.component';
 
 @NgModule({
   declarations: [
     EventsComponent,
-    FormEventComponent
+    FormEventComponent,
+    GuestsComponent
   ],
   imports: [
     CommonModule,

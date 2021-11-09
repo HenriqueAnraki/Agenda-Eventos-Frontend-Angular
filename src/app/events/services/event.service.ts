@@ -44,4 +44,8 @@ export class EventService {
   deleteEvent(eventId: number) {
     return this.http.delete<UserEvent>(`${this.endpoint}/events/${eventId}`).pipe(take(1));
   }
+
+  answerInvite(eventId: number, answer: string) {
+    return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests/answer`, {answer}).pipe(take(1));
+  }
 }
