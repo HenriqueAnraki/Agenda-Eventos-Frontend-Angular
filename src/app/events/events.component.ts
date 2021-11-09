@@ -29,6 +29,7 @@ export class EventsComponent implements OnInit {
     private authService: AuthService
   ) { }
 
+  // Function to translate guest status
   translateStatus(status: String) {
     switch (status) {
       case 'refused':
@@ -43,6 +44,8 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userEmail = this.authService.getUserEmail()
+
     this.eventService.getEvents()
       .pipe(
         catchError( (error: HttpErrorResponse) => {
@@ -56,23 +59,20 @@ export class EventsComponent implements OnInit {
         console.log(res)
         this.userEventsTest = res
 
+        // Translating guests status to portuguese and setting user own status for easy access later
         for (let i = 0; i < this.userEventsTest.length; i++) {
           const userEvent = this.userEventsTest[i]
           const guests = userEvent.guests;
+
           for (let j = 0; j < guests.length; j++) {
             if (guests[j].user.email === this.userEmail) {
               userEvent.myStatus = guests[j].status
             }
-            guests[j].status = this.translateStatus(guests[j].status);
 
+            guests[j].status = this.translateStatus(guests[j].status);
           }
         }
       })
-
-    console.log('AQUI - USERINFO')
-    console.log(this.authService.getUserEmail())
-
-    this.userEmail = this.authService.getUserEmail()
   }
 
   logout() {
@@ -95,10 +95,9 @@ export class EventsComponent implements OnInit {
   }
 
   private answernEventInvite(eventId: number, userEventIndex: number, answer: string) {
-    // call endpoint
     this.eventService.answerInvite(eventId, answer)
       .subscribe( (res) => {
-        // refresh eventlist
+
         console.log(res);
         if (answer === 'refused') {
           this.userEventsTest.splice(userEventIndex, 1)

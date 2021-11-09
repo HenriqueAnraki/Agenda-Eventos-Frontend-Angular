@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 */
 @Injectable()
 export class UserFormService {
+  private readonly endpoint = environment.apiEndpoint;
 
   constructor(
     private http: HttpClient
@@ -30,13 +31,13 @@ export class UserFormService {
   }
 
   createAccount(credentials: any) {
-    let endpoint = environment.apiEndpoint
-    
-    console.log(endpoint)
-    
-    return this.http.post(`${endpoint}/users`, credentials)
+    return this.http.post(`${this.endpoint}/users`, credentials)
     .pipe(
       take(1)
     );
+  }
+
+  getUserIdByEmail(email: string){
+    return this.http.get(`${this.endpoint}/users/${email}`).pipe(take(1));
   }
 }

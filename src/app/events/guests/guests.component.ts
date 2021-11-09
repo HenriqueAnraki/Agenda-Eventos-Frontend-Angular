@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
+import { UserFormService } from 'src/app/user-form/services/user-form.service';
+import { EventService } from '../services/event.service';
 import { UserEvent } from '../userEvent';
 
 @Component({
@@ -16,18 +18,22 @@ export class GuestsComponent implements OnInit {
 
   userEventData!: UserEvent
 
+  guestList: any[] = []
+
   constructor(
     private formValidationService: FormValidationService,
     private router: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location,
+    private userFormService: UserFormService,
+    private eventService: EventService
   ) { }
 
   ngOnInit(): void {
     this.userEventData = this.router.snapshot.data['event']
 
     this.form = this.formBuilder.group({
-      userEmail: [null, Validators.required]
+      userEmail: [null, [Validators.required, Validators.email]]
     })
   }
 
@@ -40,7 +46,27 @@ export class GuestsComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.guestList)
+    // chamar endpoint para adicionar
+    this.eventService.addGuests(this.userEventData._id, this.guestList)
+      .subscribe( (res) => {
+        // da msg e volta para pagina de eevntos
+        console.log(res)
+      })
+  }
 
+  onAdd() {
+    if (this.form.valid) {
+      this.userFormService.getUserIdByEmail(this.form.value['userEmail'])
+        .subscribe( (res: any) => {
+          console.log(res)
+          if( !this.guestList.includes(res._id)) {
+            this.guestList.push(res._id)
+          }
+        })
+    } else {
+      this.formValidationService.verifyForm(this.form)
+    }
   }
 
   onCancel() {

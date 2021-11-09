@@ -48,4 +48,10 @@ export class EventService {
   answerInvite(eventId: number, answer: string) {
     return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests/answer`, {answer}).pipe(take(1));
   }
+
+  addGuests(eventId: number, guestList: any[]) {
+    return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests`, {
+      "guests": guestList
+    }).pipe(take(1));
+  }
 }

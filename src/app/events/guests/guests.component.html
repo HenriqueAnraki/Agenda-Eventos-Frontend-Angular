@@ -36,7 +36,7 @@
             formControlName="userEmail" placeholder="user@email.com"
             [ngClass] = "applyErrorCSS('userEmail')">
           <app-field-control-error
-            errorMsg = "Email do usuário é obrigatório."
+            errorMsg = "Email Inválido."
             [showError] = "showFieldError('userEmail')">
         </app-field-control-error>
       </div>
@@ -49,6 +49,10 @@
   </div>
 
   <div class="row justify-content-around">
+    <div class="col-xs">
+      <!-- how to change to 'editar'? -->
+      <a class="btn btn-primary" (click)="onAdd()">Adicionar</a>
+    </div>
     <div class="col-xs">
       <!-- how to change to 'editar'? -->
       <button type="submit" class="btn btn-primary">Salvar</button>
