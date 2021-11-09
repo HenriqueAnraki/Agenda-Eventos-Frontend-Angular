@@ -1,0 +1,25 @@
+.user-container {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 16px;
+  background-color: white;
+  opacity: 100%;
+}
+
+/* .my-row {
+  border: 3px dotted red;
+}
+
+.my-col {
+  border: 3px dotted greenyellow;
+} */
+
+button {
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+  .container{
+      max-width: 500px;
+  }
+}
