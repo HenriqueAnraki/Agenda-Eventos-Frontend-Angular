@@ -1,67 +1,15 @@
-<app-page-title title='Eventos'></app-page-title>
+<!-- <app-page-title title='Eventos'></app-page-title> -->
 
-<div class='row justify-content-end'>
-    <div class='col-xs text-center'>
-        <a class="btn btn-primary" routerLink="/events/new">Novo Evento</a>
-    </div>
-    <div class='col-2 text-center'>
-        <a class="btn btn-primary" (click)="logout()">Sair</a>
-    </div>
+<div class='row'>
+    <a class="btn btn-success new-event" routerLink="/events/new"><span>+</span></a>
 </div>
 
 <!-- <ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError"> -->
 <ul class="list-group list-group-flush" *ngIf = "userEventsTest else loadingError">
     <li class="list-group-item" *ngFor="let userEvent of userEventsTest, let userEventIndex = index" 
         [ngStyle] = "{ 'backgroundColor': userEvent.owner.email === this.userEmail ? 'white' : 'aquamarine' }">
-        <div class='row'>
-            <div class='col-8'>
-                <!-- <b>Início: </b>{{ userEvent.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
-                <b>Início: </b>{{ userEvent.start | date : 'HH:mm dd/MM/yyyy' }}
-                <br>
-                <!-- <b>Fim: </b>{{ userEvent.end | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
-                <b>Fim: </b>{{ userEvent.end | date : 'HH:mm dd/MM/yyyy' }}
-                <br>
-                <b>Descrição: </b>{{ userEvent.description }}
-                <div *ngIf = "userEvent.guests.length > 0">
-                    <b>Dono: </b>{{ userEvent.owner.email }}
-                    <br>
-                    <b>Convidados: </b>
-                    <br>
-                    <div *ngFor="let guest of userEvent.guests">
-                        {{ guest.user.email }} - <span [ngStyle] = "{
-                            'color': (guest.status === 'Recusado') ? 'red' : (guest.status === 'Confirmado') ? 'green' : 'gold'
-                        }">{{ guest.status }}</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Showing buttons depending on user relationship with the event -->
-            <!-- If user is the owner: -->
-            <div class='col float-right' *ngIf = "userEvent.owner.email === this.userEmail; else userIsGuest">
-                <div class='col float-right'>
-                    <a class="btn btn-primary float-right" [routerLink]="['/events', userEvent.id, 'guests']">Adicionar Convidado</a>
-                </div>
-                <div class='col float-right'>
-                    <a class="btn btn-secondary float-right" [routerLink]="['/events/editar', userEvent.id]">Editar</a>
-                </div>
-                <div class='col float-right'>
-                    <a class="btn btn-danger float-right" (click)="removeEvent(userEvent.id, userEventIndex)">Remover</a>
-                </div>
-            </div>
-
-            <!-- If user is a pending guest: -->
-            <ng-template #userIsGuest>
-                <div *ngIf = "userEvent.myStatus === 'pending'">
-                    <div class='col float-right'>
-                        <a class="btn btn-secondary float-right" (click)="confirm(userEvent.id, userEventIndex)" >Aceitar</a>
-                    </div>
-                    <div class='col float-right'>
-                        <a class="btn btn-danger float-right" (click)="refuse(userEvent.id, userEventIndex)">Recusar</a>
-                    </div>
-
-                </div>
-            </ng-template>
-        </div>
+        <app-event-item [eventData]=userEvent [userEventIndex]=userEventIndex [userEmail]=userEmail></app-event-item>
     </li>
 </ul>
 

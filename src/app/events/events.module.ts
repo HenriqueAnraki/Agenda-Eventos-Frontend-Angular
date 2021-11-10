@@ -11,12 +11,15 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EventsRoutingModule } from './events-routing.module';
 import { GuestsComponent } from './guests/guests.component';
+import { EventItemComponent } from './event-item/event-item.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [
     EventsComponent,
     FormEventComponent,
-    GuestsComponent
+    GuestsComponent,
+    EventItemComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,8 @@ import { GuestsComponent } from './guests/guests.component';
     ReactiveFormsModule,
     // ngx-bootstrap dependencies
     BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    CollapseModule.forRoot()
   ],
   providers: [
     EventService

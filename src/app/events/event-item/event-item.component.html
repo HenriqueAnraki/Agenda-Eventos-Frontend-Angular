@@ -1,0 +1,57 @@
+<div class="row" (click) = "onEventClick()" >
+  <div class="col-12">
+      <p><b>{{ eventData.start | date : 'HH:mm dd/MM/yyyy' }} ~ {{ eventData.end | date : 'HH:mm dd/MM/yyyy' }}</b></p>
+  </div>
+  <div class="col-12">
+      <p>{{ eventData.description }}</p>
+  </div>
+</div>
+<div class="row" [collapse]="isCollapsed" [isAnimated]="true">
+  <div class="col-12" *ngIf = "eventData.guests.length > 0">
+    <div class="row">
+      <div class="col-12" (click) = "onGuestClick()">
+        <b>Convidados</b>
+      </div>
+      <div class="col" [collapse]="isGuestCollapsed" [isAnimated]="true">
+        {{ eventData.owner.email }} (Organizador)
+
+        <div *ngFor="let guest of eventData.guests">
+          {{ guest.user.email }} - <span [ngStyle] = "{
+              'color': (guest.status === 'Recusado') ? 'red' : (guest.status === 'Confirmado') ? 'green' : 'gold'
+          }">{{ guest.status }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12">
+    <!-- Showing buttons depending on user relationship with the event -->
+    <!-- If user is the owner: -->
+    <div class="row justify-content-around button-row"
+      *ngIf = "eventData.owner.email === this.userEmail; else userIsGuest">
+        <div class="col text-nowrap">
+          <button class="btn btn-primary" [routerLink]="['/events', eventData.id, 'guests']">Convidado</button>
+        </div>
+        <div class="col text-nowrap">
+          <button class="btn btn-secondary" [routerLink]="['/events/editar', eventData.id]">Editar</button>
+        </div>
+        <div class="col text-nowrap">
+          <button class="btn btn-danger" (click)="removeEvent(eventData.id, userEventIndex)">Remover</button>
+        </div>
+    </div>
+    
+    <!-- If user is a pending guest: -->
+    <ng-template #userIsGuest>
+      <div class="row justify-content-around button-row" *ngIf = "eventData.myStatus === 'pending'">
+          <div class='col float-right'>
+              <button class="btn btn-secondary float-right" (click)="confirm(eventData.id, userEventIndex)" >Aceitar</button>
+          </div>
+          <div class='col float-right'>
+              <button class="btn btn-danger float-right" (click)="refuse(eventData.id, userEventIndex)">Recusar</button>
+          </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
