@@ -13,7 +13,7 @@ import { ErrorHandlerService } from '../shared/services/error-handler.service';
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
+  styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
 

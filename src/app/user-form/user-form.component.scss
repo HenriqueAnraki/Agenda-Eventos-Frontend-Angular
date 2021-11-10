@@ -1,5 +1,7 @@
+$containerBorder: lightgray;
+
 .user-container {
-  border: 1px solid lightgray;
+  border: 1px solid $containerBorder;
   border-radius: 10px;
   padding: 16px;
   background-color: white;

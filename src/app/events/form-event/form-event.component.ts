@@ -11,7 +11,7 @@ import { EventService } from '../services/event.service';
 @Component({
   selector: 'app-form-event',
   templateUrl: './form-event.component.html',
-  styleUrls: ['./form-event.component.css']
+  styleUrls: ['./form-event.component.scss']
 })
 export class FormEventComponent implements OnInit {
   pageTitle: string = 'Novo Evento';

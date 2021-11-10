@@ -9,7 +9,7 @@ Component with form error message using boothstrap.
 @Component({
   selector: 'app-field-control-error',
   templateUrl: './field-control-error.component.html',
-  styleUrls: ['./field-control-error.component.css']
+  styleUrls: ['./field-control-error.component.scss']
 })
 export class FieldControlErrorComponent implements OnInit {
 

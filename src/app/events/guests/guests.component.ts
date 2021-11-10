@@ -10,7 +10,7 @@ import { UserEvent } from '../userEvent';
 @Component({
   selector: 'app-guests',
   templateUrl: './guests.component.html',
-  styleUrls: ['./guests.component.css']
+  styleUrls: ['./guests.component.scss']
 })
 export class GuestsComponent implements OnInit {
 
