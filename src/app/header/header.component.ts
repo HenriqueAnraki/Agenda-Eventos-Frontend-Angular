@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
 
@@ -10,13 +10,13 @@ Component to add a simple header.
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   isCollapsed: boolean = true;
 
   userEmail!: string
   showHeader: boolean = false;
-  // isLoggedIn$!: Observable<string>
+
   loggedInSubscription!: Subscription
 
   constructor(
@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.userEmail = this.authService.getUserEmail()
+
+    // controlling nav bar visibility
     this.loggedInSubscription = this.authService.isLoggedIn
       .subscribe( (userData) => {
         if (userData.isLoggedIn) {
@@ -38,21 +39,11 @@ export class HeaderComponent implements OnInit {
       })
   }
 
+  ngOnDestroy() {
+    this.loggedInSubscription.unsubscribe()
+  }
+
   logout() {
     this.authService.logout()
   }
-
 }
-
-
-  //   this.isLoggedInSubscription = this.authService.isLoggedIn
-  //     .subscribe( (mode) => {
-  //       this.showHeader = mode
-  //     } )
-  // }
-
- 
-  // ngOnDestroy() {
-  //   this.isLoggedInSubscription.unsubscribe()
-  // }
-

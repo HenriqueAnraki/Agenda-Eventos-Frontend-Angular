@@ -40,6 +40,10 @@ export class AuthService {
       )
   }
 
+  /**
+   * Return user auth info.
+   * Used to control navbar.
+   */
   getUserAuth(){
     return {
       isLoggedIn: this.isUserAuth(),
