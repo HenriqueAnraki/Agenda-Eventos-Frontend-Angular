@@ -1,3 +1,15 @@
 .title {
     font-size: 30px;
 }
+
+.navbar {
+    width: 100%;
+//    border: 1px dotted red;
+}
+
+.my-nav{
+    justify-content: flex-end;
+    li{
+        margin: 0 10px;
+    }
+}

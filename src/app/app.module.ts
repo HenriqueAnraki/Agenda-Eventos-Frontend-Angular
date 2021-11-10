@@ -13,6 +13,7 @@ import { ResponseErrorInterceptor } from './shared/interceptors/response-error.i
 import { UserFormModule } from './user-form/user-form.module';
 
 import { JwtModule } from '@auth0/angular-jwt'
+import { CollapseModule } from 'ngx-bootstrap/collapse'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { JwtModule } from '@auth0/angular-jwt'
       config: {
         tokenGetter: () => localStorage.getItem('token')
       }
-    })
+    }),
+    CollapseModule.forRoot()
   ],
   providers: [
     {

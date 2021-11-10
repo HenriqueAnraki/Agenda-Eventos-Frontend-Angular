@@ -1,7 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt'
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { environment } from 'src/environments/environment';
 
 
 /*
@@ -11,11 +16,42 @@ Functions related to Auth that need to be accessed throughout all the app.
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly endpoint = environment.apiEndpoint;
+
+  // private loggedIn = new BehaviorSubject<boolean>(this.isUserAuth());
+  private loggedIn = new BehaviorSubject<any>(this.getUserAuth());
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
 
   constructor(
     private router: Router,
-    private jwtHelperService: JwtHelperService
+    private jwtHelperService: JwtHelperService,
+    private http: HttpClient
   ) { }
+
+  login(credentials: any) {
+    let endpoint = environment.apiEndpoint
+
+    return this.http.post(`${endpoint}/users/login`, credentials)
+      .pipe(
+        take(1)
+      )
+  }
+
+  getUserAuth(){
+    return {
+      isLoggedIn: this.isUserAuth(),
+      userEmail: this.getUserEmail()
+    }
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+
+    this.loggedIn.next(this.getUserAuth());
+  }
 
   getToken() {
     return localStorage.getItem('token');
@@ -29,6 +65,8 @@ export class AuthService {
   }
 
   logout() {
+    this.loggedIn.next(this.getUserAuth())
+    
     localStorage.removeItem('token')
     this.router.navigate(['/'])
   }
@@ -42,6 +80,6 @@ export class AuthService {
   getUserEmail() {
     const tokenValue = this.getTokenValue()    
 
-    return tokenValue.email
+    return tokenValue?.email ?? ''
   }
 }

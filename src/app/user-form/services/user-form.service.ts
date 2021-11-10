@@ -15,21 +15,6 @@ export class UserFormService {
     private http: HttpClient
   ) { }
 
-  login(credentials: any) {
-    let endpoint = environment.apiEndpoint
-    
-    console.log(credentials)
-
-    return this.http.post(`${endpoint}/users/login`, credentials)
-      .pipe(
-        take(1)
-      )
-  }
-
-  setToken(token: string) {
-    localStorage.setItem('token', token);
-  }
-
   createAccount(credentials: any) {
     return this.http.post(`${this.endpoint}/users`, credentials)
     .pipe(

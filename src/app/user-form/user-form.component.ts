@@ -96,14 +96,14 @@ export class UserFormComponent implements OnInit {
     Set token and redirect the user to the next page if they are correct.
   */
   login() {
-    this.userFormService.login(this.form.value)
+    this.authService.login(this.form.value)
       .subscribe( (response: any) => {
         console.log('response')
         console.log(response)
 
         // verify if response has token
         if (response.token) {
-          this.userFormService.setToken(response.token)
+          this.authService.setToken(response.token)
           this.router.navigate(['/events'])
         }
       })
