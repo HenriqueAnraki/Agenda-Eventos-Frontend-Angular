@@ -1,12 +1,12 @@
-<app-page-title [title]='pageTitle'></app-page-title>
+<!-- <app-page-title [title]='pageTitle'></app-page-title> -->
 
 <form [formGroup]="form" (ngSubmit) = "onSubmit()">
   <div class="form-group">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-12">
         <label for="desc" class="font-weight-bold">Descrição:</label>
       </div>
-      <div class="col-sm-12">
+      <div class="col-12">
         <textarea type="desc" class="form-control" id="desc"
           formControlName="desc"
           [ngClass] = "applyErrorCSS('desc')"></textarea>
@@ -23,18 +23,19 @@
       <div class="col-md-6">
 
         <div class="row">
-          <div class="col">
-            <label for="password" class="font-weight-bold">Início</label>
+          <div class="col-12">
+            <label for="startDate" class="font-weight-bold">Início</label>
           </div>
         </div>
+
         <div class="row align-items-center">
-          <div class="col-sm-6">
+          <div class="col datepicker">
             <input type="text" placeholder="DD/MM/YYYY" class="form-control"
               id="startDate" formControlName="startDate"
               [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
               [bsValue]="bsstartValue" bsDatepicker>
           </div>
-          <div class="col-sm-6">
+          <div class="col-xs">
             <timepicker id="startTime" formControlName="startTime"
               [showMeridian]=false></timepicker>
             <app-field-control-error
@@ -43,23 +44,23 @@
             </app-field-control-error>
           </div>
         </div>
-        
-      </div>
-      <div class="col-md-6">
 
+      </div>
+
+      <div class="col-md-6">
         <div class="row">
-          <div class="col">
-            <label for="password" class="font-weight-bold">Fim</label>
+          <div class="col-12">
+            <label for="endDate" class="font-weight-bold">Fim</label>
           </div>
         </div>
         <div class="row align-items-center">
-          <div class="col-sm-6">
+          <div class="col datepicker">
             <input type="text" placeholder="DD/MM/YYYY" class="form-control"
               id="endDate" formControlName="endDate"
               [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
               [bsValue]="bsEndValue" bsDatepicker>
           </div>
-          <div class="col-sm-6">
+          <div class="col-xs">
             <timepicker id="endTime" formControlName="endTime"
               [showMeridian]=false></timepicker>
             <app-field-control-error
@@ -74,15 +75,14 @@
 
   </div>
 
-  <div class="row justify-content-around">
-    <div class="col-xs">
-      <!-- how to change to 'editar'? -->
+  <div class="row justify-content-between button-row">
+    <div class="col">
       <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
-    <div class="col-xs">
+    <div class="col">
       <!-- <a routerLink="/user" class="btn btn-primary"> -->
-        <a (click)="onCancel()" class="btn btn-primary">
-        Cancelar</a>
+        <button type="button" (click)="onCancel()" class="btn btn-danger">
+        Cancelar</button>
     </div>
   </div>
 </form>

@@ -4,3 +4,10 @@ body {
   // background-color: aliceblue;
   background-color: complement(white);
 }
+
+.button-row{
+  button {
+    margin-top: 16px;
+    width: 100%;
+  }
+}
