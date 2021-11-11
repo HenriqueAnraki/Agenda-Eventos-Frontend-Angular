@@ -2,7 +2,7 @@
 
 <app-event-item [eventData]=userEventData [shouldCollapse]="false"></app-event-item>
 
-<form [formGroup]="form" (ngSubmit) = "onSubmit()" class="guest-form">
+<form [formGroup]="form" class="guest-form">
   <div class="form-group">
     <div class="row">
       <div class="col-sm-12">
@@ -25,7 +25,7 @@
       <button type="button" class="btn btn-primary" (click)="onAdd()">Adicionar</button>
     </div>
     <div class="col">
-      <button type="submit" class="btn btn-success">Salvar</button>
+      <button type="button" class="btn btn-success" (click)="onSubmit()">Salvar</button>
     </div>
     <div class="col">
         <button type="button" class="btn btn-danger" (click)="onCancel()">Cancelar</button>

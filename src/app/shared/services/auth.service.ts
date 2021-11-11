@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 
@@ -35,9 +34,6 @@ export class AuthService {
     let endpoint = environment.apiEndpoint
 
     return this.http.post(`${endpoint}/users/login`, credentials)
-      .pipe(
-        take(1)
-      )
   }
 
   /**

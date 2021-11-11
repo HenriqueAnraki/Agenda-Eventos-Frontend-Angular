@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { UserFormComponent } from 'src/app/user-form/user-form.component';
@@ -21,29 +21,27 @@ export class ErrorHandlerService {
     Generic handler for http error response.
   */
   handleError(error: HttpErrorResponse) {
-    
-
-    if (error.status === 403){
+    if (error.status === HttpStatusCode.Unauthorized){
       // alert('Sessão inválida!')
       this.messagesService.showMessage(['Sessão inválida!'])
 
       this.authService.logout()
     } else {
       // let errorMessage = error.error.text ?? error.error
-      let errorMessage = error.error.message ?? error.error
-      if (!(typeof errorMessage === 'string')) {
-        errorMessage = "Um erro ocorreu! Entre em contato com nossa equipe!"
+      let errorMessage = [error.error.message ?? error.error]
+      if (!(typeof errorMessage[0] === 'string')) {
+        errorMessage[0] = "Um erro ocorreu! Entre em contato com nossa equipe!"
       } else {
         const formErrors = error.error.options?.errors
         if (formErrors) {
           for (let i = 0; i < formErrors.length; i++) {
-            errorMessage += `\n${error.error.options.errors[i].message}`
+            errorMessage.push(`${error.error.options.errors[i].message}`)
           }
         }
       }
   
       // alert(errorMessage);
-      this.messagesService.showMessage([errorMessage])
+      this.messagesService.showMessage(errorMessage)
     }
   }
 }

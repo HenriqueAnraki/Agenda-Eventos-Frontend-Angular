@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UserEvent } from './userEvent';
 
@@ -18,19 +17,19 @@ export class EventService {
   ) { }
 
   getEvents(): any {
-    return this.http.get<UserEvent>(`${this.endpoint}/events`).pipe(take(1));
+    return this.http.get<UserEvent>(`${this.endpoint}/events`);
   }
 
   getEventById(eventId: number): any {
-    return this.http.get<UserEvent>(`${this.endpoint}/events/${eventId}`).pipe(take(1));
+    return this.http.get<UserEvent>(`${this.endpoint}/events/${eventId}`);
   }
 
   createEvent(eventData: any) {
-    return this.http.post<UserEvent>(`${this.endpoint}/events`, eventData).pipe(take(1));
+    return this.http.post<UserEvent>(`${this.endpoint}/events`, eventData);
   }
 
   updateEvent(eventData: any) {
-    return this.http.put<UserEvent>(`${this.endpoint}/events/${eventData.id}`, eventData).pipe(take(1));
+    return this.http.put<UserEvent>(`${this.endpoint}/events/${eventData.id}`, eventData);
   }
 
   // Logic to handle GET and PUT in the same form
@@ -42,17 +41,17 @@ export class EventService {
   }
 
   deleteEvent(eventId: number) {
-    return this.http.delete<UserEvent>(`${this.endpoint}/events/${eventId}`).pipe(take(1));
+    return this.http.delete<UserEvent>(`${this.endpoint}/events/${eventId}`);
   }
 
   answerInvite(eventId: number, answer: string) {
-    return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests/answer`, {answer}).pipe(take(1));
+    return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests/answer`, {answer});
   }
 
   addGuests(eventId: number, guestList: any[]) {
     return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests`, {
       "guests": guestList
-    }).pipe(take(1));
+    });
   }
 
   // Function to translate guest status

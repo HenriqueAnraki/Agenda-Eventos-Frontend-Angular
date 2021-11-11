@@ -1,6 +1,4 @@
-<!-- <app-page-title [title]='pageTitle'></app-page-title> -->
-
-<form [formGroup]="form" (ngSubmit) = "onSubmit()">
+<form [formGroup]="form">
   <div class="form-group">
     <div class="row">
       <div class="col-12">
@@ -77,12 +75,10 @@
 
   <div class="row justify-content-between button-row">
     <div class="col">
-      <button type="submit" class="btn btn-primary">Salvar</button>
+      <button type="button" class="btn btn-primary" (click) = "onSubmit()">Salvar</button>
     </div>
     <div class="col">
-      <!-- <a routerLink="/user" class="btn btn-primary"> -->
-        <button type="button" (click)="onCancel()" class="btn btn-danger">
-        Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="onCancel()">Cancelar</button>
     </div>
   </div>
 </form>
