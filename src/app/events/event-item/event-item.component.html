@@ -31,7 +31,7 @@
     <div class="row justify-content-around button-row"
       *ngIf = "eventData.owner.email === this.userEmail; else userIsGuest">
         <div class="col text-nowrap">
-          <button class="btn btn-primary" [routerLink]="['/events', eventData.id, 'guests']">Convidado</button>
+          <button class="btn btn-primary" [routerLink]="['/events', eventData.id, 'guests']">Convidar</button>
         </div>
         <div class="col text-nowrap">
           <button class="btn btn-secondary" [routerLink]="['/events/editar', eventData.id]">Editar</button>
@@ -45,7 +45,7 @@
     <ng-template #userIsGuest>
       <div class="row justify-content-around button-row" *ngIf = "eventData.myStatus === 'pending'">
           <div class='col float-right'>
-              <button class="btn btn-secondary float-right" (click)="confirm(eventData.id, userEventIndex)" >Aceitar</button>
+              <button class="btn btn-success float-right" (click)="confirm(eventData.id, userEventIndex)">Aceitar</button>
           </div>
           <div class='col float-right'>
               <button class="btn btn-danger float-right" (click)="refuse(eventData.id, userEventIndex)">Recusar</button>

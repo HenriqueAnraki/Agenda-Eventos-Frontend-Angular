@@ -80,47 +80,28 @@ export class EventsComponent implements OnInit {
   }
 
   /*
-    Remove an event and refresh the event list.
-    The refresh is necessary because the list isn't storeded locally, since we are using pipe async.
+    Rrefresh the event list after removing an event.
+    Catch the event from the @Output from app-event-item
   */
-  removeEvent(eventId: number, userEventIndex: number) {
-    console.log('tentando remover evento id: ' + eventId)
-    console.log('tentando remover evento de index: ' + userEventIndex)
-
-    this.eventService.deleteEvent(eventId)
-      .subscribe( (res) => {
-        console.log(res);
-        this.userEventsTest.splice(userEventIndex, 1)
-      })
+  onRemoveIndex(index: number){
+    this.userEventsTest.splice(index, 1)
   }
 
-  private answernEventInvite(eventId: number, userEventIndex: number, answer: string) {
-    this.eventService.answerInvite(eventId, answer)
-      .subscribe( (res) => {
+  onReceiveAnswer(answerData: any){
+    const { answer, userEventIndex } = answerData
 
-        console.log(res);
-        if (answer === 'refused') {
-          this.userEventsTest.splice(userEventIndex, 1)
-        } else {
-          const userEvent = this.userEventsTest[userEventIndex]
-          const guests = userEvent.guests
-          for (let i = 0; i < guests.length; i++) {
-            if (guests[i].user.email === this.userEmail) {
-              userEvent.myStatus = answer
-            }
-            guests[i].status = this.translateStatus(answer); 
-          }
+    if (answer === 'refused') {
+      this.onRemoveIndex(userEventIndex)
+    } else {
+      const userEvent = this.userEventsTest[userEventIndex]
+      const guests = userEvent.guests
+      for (let i = 0; i < guests.length; i++) {
+        if (guests[i].user.email === this.userEmail) {
+          userEvent.myStatus = answer
         }
-      })
-  }
-
-  confirm(eventId: number, userEventIndex: number) {
-    this.answernEventInvite(eventId, userEventIndex, 'confirmed')
-    
-  }
-
-  refuse(eventId: number, userEventIndex: number) {
-    this.answernEventInvite(eventId, userEventIndex, 'refused')
+        guests[i].status = this.translateStatus(answer); 
+      }
+    }
   }
 
 }

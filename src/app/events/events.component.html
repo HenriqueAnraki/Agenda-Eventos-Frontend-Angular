@@ -9,7 +9,8 @@
     <li class="list-group-item" *ngFor="let userEvent of userEventsTest, let userEventIndex = index" 
         [ngStyle] = "{ 'backgroundColor': userEvent.owner.email === this.userEmail ? 'white' : 'aquamarine' }">
 
-        <app-event-item [eventData]=userEvent [userEventIndex]=userEventIndex [userEmail]=userEmail></app-event-item>
+        <app-event-item [eventData]=userEvent [userEventIndex]=userEventIndex [userEmail]=userEmail
+            (removeIndex)="onRemoveIndex($event)" (receiveAnswer)="onReceiveAnswer($event)"></app-event-item>
     </li>
 </ul>
 
