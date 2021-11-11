@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
-import { EventService } from '../services/event.service';
+import { EventService } from '../event.service';
 
 /*
   Component used to create and edit an event.

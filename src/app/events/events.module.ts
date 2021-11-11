@@ -5,7 +5,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 import { EventsComponent } from './events.component';
-import { EventService } from './services/event.service';
+import { EventService } from './event.service';
 import { FormEventComponent } from './form-event/form-event.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';

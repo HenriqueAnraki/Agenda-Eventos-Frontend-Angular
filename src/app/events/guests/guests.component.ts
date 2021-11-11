@@ -6,8 +6,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { map, switchMap } from 'rxjs/operators';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
-import { UserFormService } from 'src/app/user-form/services/user-form.service';
-import { EventService } from '../services/event.service';
+import { UserFormService } from 'src/app/user-form/user-form.service';
+import { EventService } from '../event.service';
 import { UserEvent } from '../userEvent';
 
 @Component({

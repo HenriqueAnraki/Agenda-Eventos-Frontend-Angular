@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
-import { EventService } from './services/event.service';
+import { EventService } from './event.service';
 import { UserEvent } from './userEvent';
 import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';

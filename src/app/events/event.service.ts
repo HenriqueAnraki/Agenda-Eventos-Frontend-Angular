@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { UserEvent } from '../userEvent';
+import { UserEvent } from './userEvent';
 
 /*
   Service to handle (user) events related requests and logic.

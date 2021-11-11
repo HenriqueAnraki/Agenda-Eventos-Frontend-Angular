@@ -5,8 +5,8 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { EventService } from '../services/event.service';
-import { UserEvent } from '../userEvent';
+import { EventService } from './event.service';
+import { UserEvent } from './userEvent';
 
 /*
   Resolver to fetch an Event data

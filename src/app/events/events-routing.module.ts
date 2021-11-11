@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormEventComponent } from './form-event/form-event.component';
 import { EventsComponent } from './events.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
-import { EventResolver } from './resolvers/event.resolver';
+import { EventResolver } from './event.resolver';
 import { GuestsComponent } from './guests/guests.component';
 
 const eventsRoutes: Routes = [
