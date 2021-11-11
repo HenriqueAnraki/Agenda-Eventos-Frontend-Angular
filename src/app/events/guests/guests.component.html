@@ -1,31 +1,8 @@
 <app-page-title title='Convites'></app-page-title>
 
-<ul class="list-group list-group-flush" *ngIf = "userEventData">
-  <li class="list-group-item">
-      <div class='row'>
-          <div class='col-8'>
-              <!-- <b>Início: </b>{{ userEventData.begin | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
-              <b>Início: </b>{{ userEventData.start | date : 'HH:mm dd/MM/yyyy' }}
-              <br>
-              <!-- <b>Fim: </b>{{ userEventData.end | date : 'HH:mm dd/MM/yyyy' : 'UTC' }} -->
-              <b>Fim: </b>{{ userEventData.end | date : 'HH:mm dd/MM/yyyy' }}
-              <br>
-              <b>Descrição: </b>{{ userEventData.description }}
-              <div *ngIf = "userEventData.guests.length > 1">
-                  <b>Dono: </b>{{ userEventData.owner.email }}
-                  <br>
-                  <b>Convidados: </b>
-                  <br>
-                  <div *ngFor="let guest of userEventData.guests">
-                      {{ guest.user.email }} - {{ guest.status }}
-                  </div>
-              </div>
-          </div>
-      </div>
-  </li>
-</ul>
+<app-event-item [eventData]=userEventData [shouldCollapse]="false"></app-event-item>
 
-<form [formGroup]="form" (ngSubmit) = "onSubmit()">
+<form [formGroup]="form" (ngSubmit) = "onSubmit()" class="guest-form">
   <div class="form-group">
     <div class="row">
       <div class="col-sm-12">
@@ -43,25 +20,15 @@
     </div>
   </div>
 
-  <div class="form-group">
-
-
-  </div>
-
   <div class="row justify-content-between button-row">
     <div class="col">
-      <!-- how to change to 'editar'? -->
       <button type="button" class="btn btn-primary" (click)="onAdd()">Adicionar</button>
     </div>
     <div class="col">
-      <!-- how to change to 'editar'? -->
       <button type="submit" class="btn btn-success">Salvar</button>
     </div>
     <div class="col">
-      <!-- <a routerLink="/user" class="btn btn-primary"> -->
         <button type="button" class="btn btn-danger" (click)="onCancel()">Cancelar</button>
     </div>
   </div>
 </form>
-
-<app-form-debug [form]=form></app-form-debug>

@@ -4,9 +4,8 @@
     <a class="btn btn-success new-event" routerLink="/events/new"><span>+</span></a>
 </div>
 
-<!-- <ul class="list-group list-group-flush" *ngIf = "userEvents$ | async as userEvents; else loadingError"> -->
-<ul class="list-group list-group-flush" *ngIf = "userEventsTest else loadingError">
-    <li class="list-group-item" *ngFor="let userEvent of userEventsTest, let userEventIndex = index" 
+<ul class="list-group list-group-flush" *ngIf = "userEvents else loadingError">
+    <li class="list-group-item" *ngFor="let userEvent of userEvents, let userEventIndex = index" 
         [ngStyle] = "{ 'backgroundColor': userEvent.owner.email === this.userEmail ? 'white' : 'aquamarine' }">
 
         <app-event-item [eventData]=userEvent [userEventIndex]=userEventIndex [userEmail]=userEmail

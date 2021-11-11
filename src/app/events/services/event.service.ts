@@ -25,11 +25,11 @@ export class EventService {
     return this.http.get<UserEvent>(`${this.endpoint}/events/${eventId}`).pipe(take(1));
   }
 
-  private createEvent(eventData: any) {
+  createEvent(eventData: any) {
     return this.http.post<UserEvent>(`${this.endpoint}/events`, eventData).pipe(take(1));
   }
 
-  private updateEvent(eventData: any) {
+  updateEvent(eventData: any) {
     return this.http.put<UserEvent>(`${this.endpoint}/events/${eventData.id}`, eventData).pipe(take(1));
   }
 
@@ -53,5 +53,19 @@ export class EventService {
     return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests`, {
       "guests": guestList
     }).pipe(take(1));
+  }
+
+  // Function to translate guest status
+  translateStatus(status: String) {
+    switch (status) {
+      case 'refused':
+        return 'Recusado'
+      case 'confirmed':
+        return 'Confirmado'
+      case 'pending':
+        return 'Em espera'
+      default:
+        return 'Em espera'
+    }
   }
 }

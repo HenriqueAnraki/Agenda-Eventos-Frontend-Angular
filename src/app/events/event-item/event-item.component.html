@@ -6,7 +6,7 @@
       <p>{{ eventData.description }}</p>
   </div>
 </div>
-<div class="row" [collapse]="isCollapsed" [isAnimated]="true">
+<div class="row" [collapse]="isExtraDataCollapsed" [isAnimated]="true">
   <div class="col-12" *ngIf = "eventData.guests.length > 0">
     <div class="row">
       <div class="col-12" (click) = "onGuestClick()">

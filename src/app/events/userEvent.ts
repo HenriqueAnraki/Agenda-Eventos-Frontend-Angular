@@ -7,12 +7,13 @@ export interface UserEvent {
     userId: number,
     guests: [{
         user: {
-            email: String
+            _id: number
+            email: string
         },
-        status: String
+        status: string
     }],
     owner: {
-        email: String
+        email: string
     },
-    myStatus: String
+    myStatus: string
 }

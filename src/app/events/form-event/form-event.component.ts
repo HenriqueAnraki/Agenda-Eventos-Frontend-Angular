@@ -2,7 +2,11 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 import { EventService } from '../services/event.service';
 
 /*
@@ -21,13 +25,16 @@ export class FormEventComponent implements OnInit {
   bsstartValue: any;
   bsEndValue: any;
 
+  subscription!: Subscription
+
   constructor(
     private formValidationService: FormValidationService,
     private router: Router,
     private formBuilder: FormBuilder,
     private eventService: EventService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messagesService: MessagesService
   ) { }
 
   /*
@@ -133,6 +140,11 @@ ${this.parseTwoDigits(time.getHours())}:\
 ${this.parseTwoDigits(time.getMinutes())}:00`
   }
 
+  concludeSaveOperation() {
+    this.messagesService.showMessage(['Evento salvo!'])
+    this.location.back()
+  }
+
   onSubmit() {
     if (this.form.valid) {
       // create event
@@ -141,38 +153,54 @@ ${this.parseTwoDigits(time.getMinutes())}:00`
       let endDate: Date = this.form.value['endDate']
       let endTime: Date = this.form.value['endTime']
 
-      console.log(startDate)
-      console.log(startTime)
-      console.log(endDate)
-      console.log(endTime)
-
       let start = this.mergeDateAndTime(startDate, startTime)
       let end = this.mergeDateAndTime(endDate, endTime)
-
-      console.log('finals')
-      console.log(start)
-      console.log(end)
-      
-      console.log(this.form.value)
 
       this.eventData = { start, end, description: this.form.value.desc, id: this.eventData?.id }
 
       // Logic to handle New and Edit in the same form
-      this.eventService.saveEvent(this.eventData)
-      .subscribe( (res) => {
-        console.log(res);
-        alert('Evento salvo!')
-        // this.router.navigate(['/events']);
-        this.location.back()
-      })
+      if (this.eventData.id) {
+        // Confirming if user really wants to update
+        const bsModalRef: BsModalRef = this.messagesService.showMessage(['Tem certeza que deseja modificar esse evento?'], true)
+        this.subscription = bsModalRef.content.onModalClose
+          .pipe(take(1))
+          .subscribe((confirmation: any) => {
+         
+            if (confirmation) {
+              this.eventService.updateEvent(this.eventData)
+                .subscribe( (res) => {
+                  console.log(res);
+                  this.concludeSaveOperation()
+                })
+            }
+          })
+      } else {
+        // create
+        this.eventService.createEvent(this.eventData)
+          .subscribe( (res) => {
+            console.log(res);
+            this.concludeSaveOperation()
+          })
+      }
     } else {
       this.formValidationService.verifyForm(this.form)
     }
   }
 
   onCancel() {
-    // this.form.reset();
-    // this.router.navigate(['/events'])
-    this.location.back()
+    if (this.form.dirty) {
+      // Confirming if user really wants to cancel
+      const bsModalRef: BsModalRef = this.messagesService.showMessage(['Você perdera todas as modificações. Tem certeza que deseja cancelar?'], true)
+      this.subscription = bsModalRef.content.onModalClose
+        .pipe(take(1))
+        .subscribe((confirmation: any) => {
+        
+          if (confirmation) {
+            this.location.back()
+          }
+        })
+    } else {
+      this.location.back()
+    }
   }
 }

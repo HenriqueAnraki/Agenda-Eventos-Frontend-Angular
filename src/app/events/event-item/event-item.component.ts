@@ -1,4 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { MessagesService } from 'src/app/shared/services/messages.service';
 import { EventService } from '../services/event.service';
 import { UserEvent } from '../userEvent';
 
@@ -9,29 +13,38 @@ import { UserEvent } from '../userEvent';
 })
 export class EventItemComponent implements OnInit {
   @Input() eventData!: UserEvent
-  @Input() userEventIndex!: number
-  @Input() userEmail!: string
+  @Input() userEventIndex: number = 0
+  @Input() userEmail: string = ''
+  @Input() shouldCollapse: boolean = true
 
   @Output() removeIndex: EventEmitter<number> = new EventEmitter()
   @Output() receiveAnswer: EventEmitter<any> = new EventEmitter()
 
-  isCollapsed: boolean = true
+  isExtraDataCollapsed: boolean = true
   isGuestCollapsed: boolean = true
 
+  subscription!: Subscription
+
   constructor(
-    private eventService: EventService
+    private eventService: EventService,
+    private messagesService: MessagesService
   ) { }
 
   ngOnInit(): void {
+    this.isExtraDataCollapsed = this.shouldCollapse
+    this.isGuestCollapsed = this.shouldCollapse
   }
 
   onEventClick() {
-    console.log('ALLO DO '+ this.eventData._id)
-    this.isCollapsed = !this.isCollapsed
+    if (this.shouldCollapse){
+      this.isExtraDataCollapsed = !this.isExtraDataCollapsed
+    }
   }
 
   onGuestClick() {
-    this.isGuestCollapsed = !this.isGuestCollapsed
+    if (this.shouldCollapse){
+      this.isGuestCollapsed = !this.isGuestCollapsed
+    }
   }
 
   private emitEventToRemoveThisIndex(){
@@ -46,11 +59,21 @@ export class EventItemComponent implements OnInit {
     console.log('tentando remover evento id: ' + eventId)
     console.log('tentando remover evento de index: ' + userEventIndex)
 
-    this.eventService.deleteEvent(eventId)
-      .subscribe( (res) => {
-        console.log(res);
-        this.emitEventToRemoveThisIndex()
+    // Confirming if user really wants to remove
+    const bsModalRef: BsModalRef = this.messagesService.showMessage(['Tem certeza que deseja remover esse evento?'], true)
+    this.subscription = bsModalRef.content.onModalClose
+      .pipe(take(1))
+      .subscribe((confirmation: any) => {
+
+        if (confirmation) {
+          this.eventService.deleteEvent(eventId)
+            .subscribe( (res) => {
+              console.log(res);
+              this.emitEventToRemoveThisIndex()
+            })
+        }
       })
+
   }
 
   private answernEventInvite(eventId: number, userEventIndex: number, answer: string) {
@@ -61,20 +84,6 @@ export class EventItemComponent implements OnInit {
           userEventIndex: this.userEventIndex,
           answer
         })
-
-        // console.log(res);
-        // if (answer === 'refused') {
-        //   this.emitEventToRemoveThisIndex()
-        // } else {
-        //   const userEvent = this.userEventsTest[userEventIndex]
-        //   const guests = userEvent.guests
-        //   for (let i = 0; i < guests.length; i++) {
-        //     if (guests[i].user.email === this.userEmail) {
-        //       userEvent.myStatus = answer
-        //     }
-        //     guests[i].status = this.translateStatus(answer); 
-        //   }
-        // }
       })
   }
 
@@ -86,5 +95,4 @@ export class EventItemComponent implements OnInit {
   refuse(eventId: number, userEventIndex: number) {
     this.answernEventInvite(eventId, userEventIndex, 'refused')
   }
-    
 }

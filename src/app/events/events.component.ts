@@ -17,10 +17,9 @@ import { ErrorHandlerService } from '../shared/services/error-handler.service';
 })
 export class EventsComponent implements OnInit {
 
-  userEvents$!: Observable<UserEvent[]>;
   error$ = new Subject<boolean>();
 
-  userEventsTest!: UserEvent[]
+  userEvents!: UserEvent[]
 
   userEmail!: string;
 
@@ -28,20 +27,6 @@ export class EventsComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService
   ) { }
-
-  // Function to translate guest status
-  translateStatus(status: String) {
-    switch (status) {
-      case 'refused':
-        return 'Recusado'
-      case 'confirmed':
-        return 'Confirmado'
-      case 'pending':
-        return 'Em espera'
-      default:
-        return 'Em espera'
-    }
-  }
 
   ngOnInit(): void {
     this.userEmail = this.authService.getUserEmail()
@@ -57,11 +42,11 @@ export class EventsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log(res)
-        this.userEventsTest = res
+        this.userEvents = res
 
         // Translating guests status to portuguese and setting user own status for easy access later
-        for (let i = 0; i < this.userEventsTest.length; i++) {
-          const userEvent = this.userEventsTest[i]
+        for (let i = 0; i < this.userEvents.length; i++) {
+          const userEvent = this.userEvents[i]
           const guests = userEvent.guests;
 
           for (let j = 0; j < guests.length; j++) {
@@ -69,7 +54,7 @@ export class EventsComponent implements OnInit {
               userEvent.myStatus = guests[j].status
             }
 
-            guests[j].status = this.translateStatus(guests[j].status);
+            guests[j].status = this.eventService.translateStatus(guests[j].status);
           }
         }
       })
@@ -84,7 +69,7 @@ export class EventsComponent implements OnInit {
     Catch the event from the @Output from app-event-item
   */
   onRemoveIndex(index: number){
-    this.userEventsTest.splice(index, 1)
+    this.userEvents.splice(index, 1)
   }
 
   onReceiveAnswer(answerData: any){
@@ -93,13 +78,13 @@ export class EventsComponent implements OnInit {
     if (answer === 'refused') {
       this.onRemoveIndex(userEventIndex)
     } else {
-      const userEvent = this.userEventsTest[userEventIndex]
+      const userEvent = this.userEvents[userEventIndex]
       const guests = userEvent.guests
       for (let i = 0; i < guests.length; i++) {
         if (guests[i].user.email === this.userEmail) {
           userEvent.myStatus = answer
         }
-        guests[i].status = this.translateStatus(answer); 
+        guests[i].status = this.eventService.translateStatus(answer); 
       }
     }
   }

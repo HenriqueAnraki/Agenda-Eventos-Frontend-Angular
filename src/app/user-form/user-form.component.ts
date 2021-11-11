@@ -5,6 +5,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { FormValidationService } from '../shared/services/form-validation.service';
 import { Location } from '@angular/common';
 import { UserFormService } from './services/user-form.service';
+import { MessagesService } from '../shared/services/messages.service';
 
 /*
   This component is used to:
@@ -32,7 +33,8 @@ export class UserFormComponent implements OnInit {
     private userFormService: UserFormService,
     private authService: AuthService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private messagesService: MessagesService
   ) { }
 
   ngOnInit(): void {
@@ -117,7 +119,8 @@ export class UserFormComponent implements OnInit {
       .subscribe( (res: any) => {
         console.log('resposta do post: ')
         console.log(res)
-        alert("Conta criada! Já pode usar a sua agenda!")
+        // alert("Conta criada! Já pode usar a sua agenda!")
+        this.messagesService.showMessage(['Conta criada! Já pode usar a sua agenda!'])
 
         // [todo] o redirect faço aqui, ou no componente?
         this.router.navigate(['/login'])

@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { UserFormComponent } from 'src/app/user-form/user-form.component';
+import { MessageComponent } from '../components/message/message.component';
 import { AuthService } from './auth.service';
+import { MessagesService } from './messages.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +12,21 @@ import { AuthService } from './auth.service';
 export class ErrorHandlerService {
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private messagesService: MessagesService
   ) { }
+
 
   /*
     Generic handler for http error response.
   */
   handleError(error: HttpErrorResponse) {
+    
+
     if (error.status === 403){
-      alert('Sessão inválida!')
+      // alert('Sessão inválida!')
+      this.messagesService.showMessage(['Sessão inválida!'])
+
       this.authService.logout()
     } else {
       // let errorMessage = error.error.text ?? error.error
@@ -32,7 +42,8 @@ export class ErrorHandlerService {
         }
       }
   
-      alert(errorMessage);
+      // alert(errorMessage);
+      this.messagesService.showMessage([errorMessage])
     }
   }
 }

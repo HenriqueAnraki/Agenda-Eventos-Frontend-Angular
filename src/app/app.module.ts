@@ -14,6 +14,7 @@ import { UserFormModule } from './user-form/user-form.module';
 
 import { JwtModule } from '@auth0/angular-jwt'
 import { CollapseModule } from 'ngx-bootstrap/collapse'
+import { ModalModule } from 'ngx-bootstrap/modal'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse'
         tokenGetter: () => localStorage.getItem('token')
       }
     }),
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     {
