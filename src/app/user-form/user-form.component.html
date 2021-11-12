@@ -11,10 +11,12 @@
         <div class="col">
           <input type="email" class="form-control" id="email"
             formControlName="email" placeholder="your@email.com"
-            [ngClass] = "applyErrorCSS('email')">
+            [ngClass] = "{
+              'is-invalid': !email?.valid && (!!email?.touched || !!email?.dirty)
+            }">
           <app-field-control-error
             errorMsg = "Email Inválido."
-            [showError] = "showFieldError('email')">
+            [showError] = "!email?.valid && (!!email?.touched || !!email?.dirty)">
           </app-field-control-error>
         </div>
       </div>
@@ -30,10 +32,12 @@
         <div class="col">
           <input type="password" class="form-control" id="password"
             formControlName="password" placeholder="YourPassword"
-            [ngClass] = "applyErrorCSS('password')">
+            [ngClass] = "{
+              'is-invalid': !password?.valid && (!!password?.touched || !!password?.dirty)
+            }">
           <app-field-control-error
             errorMsg = "Senha é obrigatória."
-            [showError] = "showFieldError('password')">
+            [showError] = "!password?.valid && (!!password?.touched || !!password?.dirty)">
           </app-field-control-error>
         </div>
       </div>

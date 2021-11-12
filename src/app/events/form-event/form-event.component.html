@@ -7,10 +7,12 @@
       <div class="col-12">
         <textarea type="desc" class="form-control" id="desc"
           formControlName="desc"
-          [ngClass] = "applyErrorCSS('desc')"></textarea>
+          [ngClass] = "{
+            'is-invalid': !desc?.valid && (!!desc?.touched || !!desc?.dirty)
+          }"></textarea>
         <app-field-control-error
           errorMsg = "Descrição é obrigatória."
-          [showError] = "showFieldError('desc')">
+          [showError] = "!desc?.valid && (!!desc?.touched || !!desc?.dirty)">
         </app-field-control-error>
       </div>
     </div>
@@ -31,14 +33,22 @@
             <input type="text" placeholder="DD/MM/YYYY" class="form-control"
               id="startDate" formControlName="startDate"
               [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-              [bsValue]="bsstartValue" bsDatepicker>
+              [bsValue]="bsstartValue" bsDatepicker 
+              [ngClass] = "{
+                'is-invalid': !startDate?.valid && (!!startDate?.touched || !!startDate?.dirty)
+              }">
+            <app-field-control-error
+              errorMsg = "Data é obrigatória."
+              [showError] = "!startDate?.valid && (!!startDate?.touched || !!startDate?.dirty)">
+            </app-field-control-error>
           </div>
+
           <div class="col-xs">
             <timepicker id="startTime" formControlName="startTime"
-              [showMeridian]=false></timepicker>
+              [showMeridian]=false [showSpinners]=false></timepicker>
             <app-field-control-error
-              errorMsg = "Início é obrigatório."
-              [showError] = "showFieldError('startDate')">
+              errorMsg = "Horário é obrigatório."
+              [showError] = "!startTime?.valid && (!!startTime?.touched || !!startTime?.dirty)">
             </app-field-control-error>
           </div>
         </div>
@@ -56,14 +66,22 @@
             <input type="text" placeholder="DD/MM/YYYY" class="form-control"
               id="endDate" formControlName="endDate"
               [bsConfig]="{rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY'}"
-              [bsValue]="bsEndValue" bsDatepicker>
+              [bsValue]="bsEndValue" bsDatepicker
+              [ngClass] = "{
+                'is-invalid': !endDate?.valid && (!!endDate?.touched || !!endDate?.dirty)
+              }">
+            <app-field-control-error
+              errorMsg = "Data é obrigatória."
+              [showError] = "!endDate?.valid && (!!endDate?.touched || !!endDate?.dirty)">
+            </app-field-control-error>
           </div>
+
           <div class="col-xs">
             <timepicker id="endTime" formControlName="endTime"
-              [showMeridian]=false></timepicker>
+              [showMeridian]=false [showSpinners]=false></timepicker>
             <app-field-control-error
-              errorMsg = "Fim é obrigatório."
-              [showError] = "showFieldError('endDate')">
+              errorMsg = "Horário é obrigatório."
+              [showError] = "!endTime?.valid && (!!endTime?.touched || !!endTime?.dirty)">
             </app-field-control-error>
           </div>
         </div>

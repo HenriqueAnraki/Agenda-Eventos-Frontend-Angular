@@ -38,6 +38,7 @@ export class UserFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
     // Initializing values based on the page (login or user)
     if (this.router.url.includes('/user') ) {
       this.isLogin = false;
@@ -57,6 +58,10 @@ export class UserFormComponent implements OnInit {
     })
   }
 
+  // Getters to access form fields at the template
+  get email() { return this.form.get('email'); }
+  get password() { return this.form.get('password'); }
+
   onSubmit() {
     console.log(this.form)
 
@@ -72,14 +77,6 @@ export class UserFormComponent implements OnInit {
       console.log('Form Inválido!')
       this.formValidationService.verifyForm(this.form)
     }
-  }
-
-  showFieldError(field: string): boolean {
-    return this.formValidationService.isFieldInvalid(field, this.form)
-  }
-
-  applyErrorCSS(field: string){
-    return this.formValidationService.errorCSS(field, this.form)
   }
 
   /*

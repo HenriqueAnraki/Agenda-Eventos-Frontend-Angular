@@ -11,10 +11,12 @@
       <div class="col-sm-12">
           <input type="userEmail" class="form-control" id="userEmail"
             formControlName="userEmail" placeholder="user@email.com"
-            [ngClass] = "applyErrorCSS('userEmail')">
+            [ngClass] = "{
+              'is-invalid': !userEmail?.valid && (!!userEmail?.touched || !!userEmail?.dirty)
+            }">
           <app-field-control-error
             errorMsg = "Email Inválido."
-            [showError] = "showFieldError('userEmail')">
+            [showError] = "!userEmail?.valid && (!!userEmail?.touched || !!userEmail?.dirty)">
         </app-field-control-error>
       </div>
     </div>

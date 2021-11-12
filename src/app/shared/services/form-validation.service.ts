@@ -10,13 +10,6 @@ export class FormValidationService {
   constructor() { }
 
   /*
-  Validate a field.
-  */
-  isFieldInvalid(field: string, form: FormGroup): boolean {
-    return !form.get(field)?.valid && (!!form.get(field)?.touched || !!form.get(field)?.dirty)
-  }
-
-  /*
   Touch all form's fields. Used to trigger form error messages.
   */
   verifyForm(formGroup: FormGroup) {
@@ -28,14 +21,5 @@ export class FormValidationService {
         this.verifyForm(control);
       }
     });
-  }
-
-  /*
-  Return CSS for a invalid field.
-  */
-  errorCSS(field: string, form: FormGroup) {
-    return {
-      'is-invalid': this.isFieldInvalid(field, form)
-    }
   }
 }

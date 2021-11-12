@@ -110,13 +110,12 @@ export class FormEventComponent implements OnInit {
     })
   }
 
-  showFieldError(field: string): boolean {
-    return this.formValidationService.isFieldInvalid(field, this.form)
-  }
-
-  applyErrorCSS(field: string){
-    return this.formValidationService.errorCSS(field, this.form)
-  }
+  // Getters to access form fields at the template
+  get desc() { return this.form.get('desc'); }
+  get startDate() { return this.form.get('startDate'); }
+  get startTime() { return this.form.get('startTime'); }
+  get endDate() { return this.form.get('endDate'); }
+  get endTime() { return this.form.get('endTime'); }
 
   /*
     Function to set a leading zero if necessary.

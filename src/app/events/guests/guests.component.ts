@@ -48,18 +48,10 @@ export class GuestsComponent implements OnInit {
     this.form = this.formBuilder.group({
       userEmail: [null, [Validators.required, Validators.email]]
     })
-
-    // populate the guest list with actual guests
-
   }
 
-  showFieldError(field: string): boolean {
-    return this.formValidationService.isFieldInvalid(field, this.form)
-  }
-
-  applyErrorCSS(field: string){
-    return this.formValidationService.errorCSS(field, this.form)
-  }
+  // Getter to access form fields at the template
+  get userEmail() { return this.form.get('userEmail'); }
 
   onSubmit() {
     console.log(this.guestList)
