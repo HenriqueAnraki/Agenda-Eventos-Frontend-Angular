@@ -43,67 +43,36 @@ export class FormEventComponent implements OnInit {
     This is needed because JS automatically converts the date to the local TZ, which could cause unwanted behaviors.
   */
   getDateWithouTZ(date: any) {
-    console.log('AQUI')
-    console.log(date)
     if (date) {
       return new Date(date.substring(0, date.length - 1))
     }
     return new Date()
   }
 
-  /*
-    Function to guarantee that the edit data is present.
-    Since we are using router state to send the data, there are possibilities to lose this data
-     (like manual refreshing the page).
-    In case the data was lost, the user is redirected to the /events page.
-  */
-  handleEditPageData() {
-    this.eventData = history.state.data;
-
-    if (this.router.url.includes('/editar')) {
-      // chamar request
-      if (!this.eventData) {
-        this.onCancel()
-      }
-
-      this.pageTitle = 'Modificiar Evento'
-    }
-    console.log(this.eventData)
-  }
-
   ngOnInit(): void {
-    // this.handleEditPageData()
-
     this.eventData = this.route.snapshot.data['event']
-    console.log('evento do guard')
-    console.log(this.eventData)
 
     /*
       Creating the form and setting the starting value if the user is in the /edit page.
     */
     this.form = this.formBuilder.group({
-      desc: [ 
-        // this.eventData?.description ?? null,
+      desc: [
         this.eventData.description,
         Validators.required
       ],
       startDate: [
-        // this.getDateWithouTZ(this.eventData?.startTZ),
         new Date(this.eventData.start),
         Validators.required
       ],
       startTime: [
-        // this.getDateWithouTZ(this.eventData?.startTZ),
         new Date(this.eventData.start),
         Validators.required
       ],
       endDate: [
-        // this.getDateWithouTZ(this.eventData?.endTZ),
         new Date(this.eventData.end),
         Validators.required
       ],
       endTime: [
-        // this.getDateWithouTZ(this.eventData?.endTZ),
         new Date(this.eventData.end),
         Validators.required
       ]
@@ -157,9 +126,6 @@ export class FormEventComponent implements OnInit {
       let start = this.mergeDateAndTime(startDate, startTime)
       let end = this.mergeDateAndTime(endDate, endTime)
 
-      console.log(start)
-      console.log(end)
-
       this.eventData = { start, end, description: this.form.value.desc, id: this.eventData?.id }
 
       // Logic to handle New and Edit in the same form
@@ -173,7 +139,6 @@ export class FormEventComponent implements OnInit {
             if (confirmation) {
               this.eventService.updateEvent(this.eventData)
                 .subscribe( (res) => {
-                  console.log(res);
                   this.concludeSaveOperation()
                 })
             }
@@ -182,7 +147,6 @@ export class FormEventComponent implements OnInit {
         // create
         this.eventService.createEvent(this.eventData)
           .subscribe( (res) => {
-            console.log(res);
             this.concludeSaveOperation()
           })
       }

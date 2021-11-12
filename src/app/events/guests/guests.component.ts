@@ -54,8 +54,6 @@ export class GuestsComponent implements OnInit {
   get userEmail() { return this.form.get('userEmail'); }
 
   onSubmit() {
-    console.log(this.guestList)
-
     this.eventService.addGuests(this.userEventData._id, this.guestList)
       .subscribe( (res) => {
         this.messagesService.showMessage(['Usuários foram convidados!'])
@@ -67,7 +65,6 @@ export class GuestsComponent implements OnInit {
     if (this.form.valid) {
       this.userFormService.getUserIdByEmail(this.form.value['userEmail'])
         .subscribe( (res: any) => {
-          console.log(res)
           if(this.userEventData.owner._id != res._id && !this.guestList.includes(res._id)) {
             this.guestList.push(res._id)
 

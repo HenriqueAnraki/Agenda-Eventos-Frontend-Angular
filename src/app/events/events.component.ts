@@ -41,7 +41,6 @@ export class EventsComponent implements OnInit {
         })
       )
       .subscribe((res: any) => {
-        console.log(res)
         this.userEvents = res
 
         // Translating guests status to portuguese and setting user own status for easy access later

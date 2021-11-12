@@ -17,7 +17,6 @@ Functions related to Auth that need to be accessed throughout all the app.
 export class AuthService {
   private readonly endpoint = environment.apiEndpoint;
 
-  // private loggedIn = new BehaviorSubject<boolean>(this.isUserAuth());
   private loggedIn = new BehaviorSubject<any>(this.getUserAuth());
 
   get isLoggedIn() {

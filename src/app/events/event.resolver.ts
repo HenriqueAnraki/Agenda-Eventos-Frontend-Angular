@@ -21,7 +21,6 @@ export class EventResolver implements Resolve<UserEvent> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     if (route.params && route.params.id) {
-      console.log('resolver')
       return this.eventService.getEventById(route.params.id);
     }
 

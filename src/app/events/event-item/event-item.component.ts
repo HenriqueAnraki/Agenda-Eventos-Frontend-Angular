@@ -64,7 +64,6 @@ export class EventItemComponent implements OnInit {
         if (confirmation) {
           this.eventService.deleteEvent(eventId)
             .subscribe( (res) => {
-              console.log(res);
               this.emitEventToRemoveThisIndex()
             })
         }

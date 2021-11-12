@@ -22,17 +22,17 @@ export class ErrorHandlerService {
   */
   handleError(error: HttpErrorResponse) {
     if (error.status === HttpStatusCode.Unauthorized){
-      // alert('Sessão inválida!')
       this.messagesService.showMessage(['Sessão inválida!'])
 
       this.authService.logout()
     } else {
-      // let errorMessage = error.error.text ?? error.error
       let errorMessage = [error.error.message ?? error.error]
+
       if (!(typeof errorMessage[0] === 'string')) {
         errorMessage[0] = "Um erro ocorreu! Entre em contato com nossa equipe!"
       } else {
         const formErrors = error.error.options?.errors
+
         if (formErrors) {
           for (let i = 0; i < formErrors.length; i++) {
             errorMessage.push(`${error.error.options.errors[i].message}`)
@@ -40,7 +40,6 @@ export class ErrorHandlerService {
         }
       }
   
-      // alert(errorMessage);
       this.messagesService.showMessage(errorMessage)
     }
   }

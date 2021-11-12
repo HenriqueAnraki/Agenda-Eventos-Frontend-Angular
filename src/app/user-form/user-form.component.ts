@@ -63,18 +63,14 @@ export class UserFormComponent implements OnInit {
   get password() { return this.form.get('password'); }
 
   onSubmit() {
-    console.log(this.form)
 
     if (this.form.valid) {
-      console.log('tudo certo!')
-
       if (this.isLogin) {
         this.login()
       } else {
         this.createUser()
       }
     } else {
-      console.log('Form Inválido!')
       this.formValidationService.verifyForm(this.form)
     }
   }
@@ -97,9 +93,6 @@ export class UserFormComponent implements OnInit {
   login() {
     this.authService.login(this.form.value)
       .subscribe( (response: any) => {
-        console.log('response')
-        console.log(response)
-
         // verify if response has token
         if (response.token) {
           this.authService.setToken(response.token)
@@ -114,12 +107,8 @@ export class UserFormComponent implements OnInit {
   createUser() {
     this.userFormService.createAccount(this.form.value)
       .subscribe( (res: any) => {
-        console.log('resposta do post: ')
-        console.log(res)
-        // alert("Conta criada! Já pode usar a sua agenda!")
         this.messagesService.showMessage(['Conta criada! Já pode usar a sua agenda!'])
 
-        // [todo] o redirect faço aqui, ou no componente?
         this.router.navigate(['/login'])
       })
   }

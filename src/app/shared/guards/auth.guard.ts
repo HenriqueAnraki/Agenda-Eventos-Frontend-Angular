@@ -20,16 +20,12 @@ export class AuthGuard implements CanActivate, CanLoad {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('CanActivate - auth');
-
     return this.verifyUserAuth();
   }
 
   canLoad(
     route: Route
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('CanLoad- auth');
-    
     return this.verifyUserAuth();
   }
 
