@@ -1,18 +1,19 @@
 export interface UserEvent {
-    id: number,
-    _id: number,
+    id: string,
+    _id: string,
     description: string,
     start: Date,
     end: Date,
-    userId: number,
+    userId: string,
     guests: [{
         user: {
-            _id: number
+            _id: string
             email: string
         },
         status: string
     }],
     owner: {
+        _id: string
         email: string
     },
     myStatus: string

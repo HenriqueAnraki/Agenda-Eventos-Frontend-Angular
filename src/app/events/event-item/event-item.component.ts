@@ -54,11 +54,7 @@ export class EventItemComponent implements OnInit {
   /*
     Remove an event and emit an event to refresh the list.
   */
-  removeEvent(eventId: number, userEventIndex: number) {
-    // how does this work here o.o
-    console.log('tentando remover evento id: ' + eventId)
-    console.log('tentando remover evento de index: ' + userEventIndex)
-
+  removeEvent(eventId: string, userEventIndex: number) {
     // Confirming if user really wants to remove
     const bsModalRef: BsModalRef = this.messagesService.showMessage(['Tem certeza que deseja remover esse evento?'], true)
     this.subscription = bsModalRef.content.onModalClose
@@ -76,7 +72,7 @@ export class EventItemComponent implements OnInit {
 
   }
 
-  private answernEventInvite(eventId: number, userEventIndex: number, answer: string) {
+  private answernEventInvite(eventId: string, userEventIndex: number, answer: string) {
     this.eventService.answerInvite(eventId, answer)
       .subscribe( (res) => {
         
@@ -87,12 +83,12 @@ export class EventItemComponent implements OnInit {
       })
   }
 
-  confirm(eventId: number, userEventIndex: number) {
+  confirm(eventId: string, userEventIndex: number) {
     this.answernEventInvite(eventId, userEventIndex, 'confirmed')
     
   }
 
-  refuse(eventId: number, userEventIndex: number) {
+  refuse(eventId: string, userEventIndex: number) {
     this.answernEventInvite(eventId, userEventIndex, 'refused')
   }
 }

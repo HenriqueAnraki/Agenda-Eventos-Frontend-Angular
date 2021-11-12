@@ -132,11 +132,13 @@ export class FormEventComponent implements OnInit {
   */
   mergeDateAndTime(date: Date, time: Date) {
     this.parseTwoDigits(date.getMonth())
-    return `${date.getFullYear()}-\
-${this.parseTwoDigits(date.getMonth()+1)}-\
-${this.parseTwoDigits(date.getDate())} \
-${this.parseTwoDigits(time.getHours())}:\
-${this.parseTwoDigits(time.getMinutes())}:00`
+    return new Date(
+      `${date.getFullYear()}-\
+        ${this.parseTwoDigits(date.getMonth()+1)}-\
+        ${this.parseTwoDigits(date.getDate())} \
+        ${this.parseTwoDigits(time.getHours())}:\
+        ${this.parseTwoDigits(time.getMinutes())}:00`
+    )
   }
 
   concludeSaveOperation() {
@@ -154,6 +156,9 @@ ${this.parseTwoDigits(time.getMinutes())}:00`
 
       let start = this.mergeDateAndTime(startDate, startTime)
       let end = this.mergeDateAndTime(endDate, endTime)
+
+      console.log(start)
+      console.log(end)
 
       this.eventData = { start, end, description: this.form.value.desc, id: this.eventData?.id }
 

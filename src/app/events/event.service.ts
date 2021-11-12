@@ -20,7 +20,7 @@ export class EventService {
     return this.http.get<UserEvent>(`${this.endpoint}/events`);
   }
 
-  getEventById(eventId: number): any {
+  getEventById(eventId: string): any {
     return this.http.get<UserEvent>(`${this.endpoint}/events/${eventId}`);
   }
 
@@ -40,15 +40,15 @@ export class EventService {
     return this.createEvent(eventData)
   }
 
-  deleteEvent(eventId: number) {
+  deleteEvent(eventId: string) {
     return this.http.delete<UserEvent>(`${this.endpoint}/events/${eventId}`);
   }
 
-  answerInvite(eventId: number, answer: string) {
+  answerInvite(eventId: string, answer: string) {
     return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests/answer`, {answer});
   }
 
-  addGuests(eventId: number, guestList: any[]) {
+  addGuests(eventId: string, guestList: any[]) {
     return this.http.post<UserEvent>(`${this.endpoint}/events/${eventId}/guests`, {
       "guests": guestList
     });

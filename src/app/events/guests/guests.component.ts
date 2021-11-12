@@ -68,7 +68,7 @@ export class GuestsComponent implements OnInit {
       this.userFormService.getUserIdByEmail(this.form.value['userEmail'])
         .subscribe( (res: any) => {
           console.log(res)
-          if( !this.guestList.includes(res._id)) {
+          if(this.userEventData.owner._id != res._id && !this.guestList.includes(res._id)) {
             this.guestList.push(res._id)
 
             // Adding into userEventData guests so the interface updates
