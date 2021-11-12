@@ -21,16 +21,19 @@ export class MessageComponent implements OnInit {
     this.onModalClose = new Subject()
   }
 
+  // emiting evento to handle user response
   onConfirm() {
     this.onModalClose.next(true)
     this.bsModalRef.hide()
   }
 
+  // emiting evento to handle user response
   onCancel() {
     this.onModalClose.next(false)
     this.bsModalRef.hide()
   }
 
+  // emiting evento to handle user response
   onClose() {
     this.onModalClose.next(true)
     this.bsModalRef.hide()

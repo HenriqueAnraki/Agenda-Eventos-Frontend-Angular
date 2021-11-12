@@ -29,25 +29,12 @@ export class FormEventComponent implements OnInit {
 
   constructor(
     private formValidationService: FormValidationService,
-    private router: Router,
     private formBuilder: FormBuilder,
     private eventService: EventService,
     private location: Location,
     private route: ActivatedRoute,
     private messagesService: MessagesService
   ) { }
-
-  /*
-    Function to process dates sent by the server.
-    Receive a UTC date, remove the 'Z' at the final and generete a new date.
-    This is needed because JS automatically converts the date to the local TZ, which could cause unwanted behaviors.
-  */
-  getDateWithouTZ(date: any) {
-    if (date) {
-      return new Date(date.substring(0, date.length - 1))
-    }
-    return new Date()
-  }
 
   ngOnInit(): void {
     this.eventData = this.route.snapshot.data['event']
@@ -86,47 +73,27 @@ export class FormEventComponent implements OnInit {
   get endDate() { return this.form.get('endDate'); }
   get endTime() { return this.form.get('endTime'); }
 
-  /*
-    Function to set a leading zero if necessary.
-  */
-  parseTwoDigits(num: number) {
-    if (num < 10) {
-      return `0${num}`
-    }
-    return `${num}`
-  }
-
-  /*
-    Merge date and time form fields data.
-  */
-  mergeDateAndTime(date: Date, time: Date) {
-    this.parseTwoDigits(date.getMonth())
-    return new Date(
-      `${date.getFullYear()}-\
-        ${this.parseTwoDigits(date.getMonth()+1)}-\
-        ${this.parseTwoDigits(date.getDate())} \
-        ${this.parseTwoDigits(time.getHours())}:\
-        ${this.parseTwoDigits(time.getMinutes())}:00`
-    )
-  }
-
   concludeSaveOperation() {
     this.messagesService.showMessage(['Evento salvo!'])
     this.location.back()
   }
 
+  formatEventData() {
+    let startDate: Date = this.form.value['startDate']
+    let startTime: Date = this.form.value['startTime']
+    let endDate: Date = this.form.value['endDate']
+    let endTime: Date = this.form.value['endTime']
+
+    let start = this.eventService.mergeDateAndTime(startDate, startTime)
+    let end = this.eventService.mergeDateAndTime(endDate, endTime)
+
+    return { start, end, description: this.form.value.desc, id: this.eventData?.id }
+  }
+
   onSubmit() {
     if (this.form.valid) {
       // create event
-      let startDate: Date = this.form.value['startDate']
-      let startTime: Date = this.form.value['startTime']
-      let endDate: Date = this.form.value['endDate']
-      let endTime: Date = this.form.value['endTime']
-
-      let start = this.mergeDateAndTime(startDate, startTime)
-      let end = this.mergeDateAndTime(endDate, endTime)
-
-      this.eventData = { start, end, description: this.form.value.desc, id: this.eventData?.id }
+      this.eventData = this.formatEventData()
 
       // Logic to handle New and Edit in the same form
       if (this.eventData.id) {
@@ -144,6 +111,7 @@ export class FormEventComponent implements OnInit {
             }
           })
       } else {
+        
         // create
         this.eventService.createEvent(this.eventData)
           .subscribe( (res) => {

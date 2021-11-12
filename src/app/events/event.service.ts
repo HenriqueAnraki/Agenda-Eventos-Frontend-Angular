@@ -67,4 +67,28 @@ export class EventService {
         return 'Em espera'
     }
   }
+
+  /*
+    Function to set a leading zero if necessary.
+  */
+  private parseTwoDigits(num: number) {
+    if (num < 10) {
+      return `0${num}`
+    }
+    return `${num}`
+  }
+
+   /*
+    Merge date and time form fields data.
+  */
+  mergeDateAndTime(date: Date, time: Date) {
+    this.parseTwoDigits(date.getMonth())
+    return new Date(
+      `${date.getFullYear()}-\
+        ${this.parseTwoDigits(date.getMonth()+1)}-\
+        ${this.parseTwoDigits(date.getDate())} \
+        ${this.parseTwoDigits(time.getHours())}:\
+        ${this.parseTwoDigits(time.getMinutes())}:00`
+    )
+  }
 }

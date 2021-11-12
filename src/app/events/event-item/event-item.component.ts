@@ -71,6 +71,9 @@ export class EventItemComponent implements OnInit {
 
   }
 
+  /**
+   * Answer Event and emit an event to update the lis.
+   */
   private answernEventInvite(eventId: string, userEventIndex: number, answer: string) {
     this.eventService.answerInvite(eventId, answer)
       .subscribe( (res) => {
