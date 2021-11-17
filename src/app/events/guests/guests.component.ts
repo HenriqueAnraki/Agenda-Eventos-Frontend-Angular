@@ -37,13 +37,13 @@ export class GuestsComponent implements OnInit {
     this.userEventData = this.router.snapshot.data['event']
     const guests = this.userEventData.guests;
 
-    for (let i = 0; i < guests.length; i++) {
-      const guest = guests[i]
-      guest.status = this.eventService.translateStatus(guest.status);
+    // for (let i = 0; i < guests.length; i++) {
+    //   const guest = guests[i]
+    //   guest.status = this.eventService.translateStatus(guest.status);
 
-      // populate the guest list with actual guests
-      this.guestList.push(guest.user._id)
-    }
+    //   // populate the guest list with actual guests
+    //   this.guestList.push(guest.user._id)
+    // }
 
     this.form = this.formBuilder.group({
       userEmail: [null, [Validators.required, Validators.email]]
