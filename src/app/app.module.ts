@@ -14,7 +14,8 @@ import { UserFormModule } from './user-form/user-form.module';
 
 import { JwtModule } from '@auth0/angular-jwt'
 import { CollapseModule } from 'ngx-bootstrap/collapse'
-import { ModalModule } from 'ngx-bootstrap/modal'
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { GraphQLModule } from './graphql.module'
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ModalModule } from 'ngx-bootstrap/modal'
       }
     }),
     CollapseModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    GraphQLModule
   ],
   providers: [
     {

@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
+import { Apollo, gql } from 'apollo-angular'
+
 
 /*
 Functions related to Auth that need to be accessed throughout all the app.
@@ -26,13 +28,36 @@ export class AuthService {
   constructor(
     private router: Router,
     private jwtHelperService: JwtHelperService,
-    private http: HttpClient
+    private http: HttpClient,
+    private apollo: Apollo
   ) { }
 
   login(credentials: any) {
     let endpoint = environment.apiEndpoint
 
-    return this.http.post(`${endpoint}/users/login`, credentials)
+    const graphqlQuery = gql`
+      query ($data: UserInput!) {
+        login(data: $data) {
+          token
+        }
+      }
+    `
+
+    const variables = {
+      data: {
+        email: credentials.email,
+        password: credentials.password
+      }
+    }
+
+    console.log(graphqlQuery)
+
+    return this.apollo.query({
+      query: graphqlQuery,
+      variables
+    })
+
+    // return this.http.post(`${endpoint}/users/login`, credentials)
   }
 
   /**

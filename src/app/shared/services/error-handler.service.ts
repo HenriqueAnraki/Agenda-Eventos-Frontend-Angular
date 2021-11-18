@@ -26,12 +26,12 @@ export class ErrorHandlerService {
 
       this.authService.logout()
     } else {
-      let errorMessage = [error.error.message ?? error.error]
+      let errorMessage = [error.error?.message ?? error.error ?? error.message]
 
       if (!(typeof errorMessage[0] === 'string')) {
         errorMessage[0] = "Um erro ocorreu! Entre em contato com nossa equipe!"
       } else {
-        const formErrors = error.error.options?.errors
+        const formErrors = error.error?.options?.errors
 
         if (formErrors) {
           for (let i = 0; i < formErrors.length; i++) {

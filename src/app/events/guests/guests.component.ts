@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { ErrorHandlerService } from 'src/app/shared/services/error-handler.service';
 import { FormValidationService } from 'src/app/shared/services/form-validation.service';
 import { MessagesService } from 'src/app/shared/services/messages.service';
 import { UserFormService } from 'src/app/user-form/user-form.service';
@@ -30,7 +30,8 @@ export class GuestsComponent implements OnInit {
     private location: Location,
     private userFormService: UserFormService,
     private eventService: EventService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -64,15 +65,23 @@ export class GuestsComponent implements OnInit {
   onAdd() {
     if (this.form.valid) {
       this.userFormService.getUserIdByEmail(this.form.value['userEmail'])
+        .pipe(
+          catchError( (error: any) => {
+            this.errorHandlerService.handleError(error)
+            throw error
+          })
+        )
         .subscribe( (res: any) => {
-          if(this.userEventData.owner._id != res._id && !this.guestList.includes(res._id)) {
-            this.guestList.push(res._id)
+          const user = res.data.user
+
+          if(this.userEventData.owner._id != user._id && !this.guestList.includes(user._id)) {
+            this.guestList.push(user._id)
 
             // Adding into userEventData guests so the interface updates
             this.userEventData.guests.push({
               user: {
-                _id: res._id,
-                email: res.email
+                _id: user._id,
+                email: user.email
               },
               status: 'Em espera'
             })

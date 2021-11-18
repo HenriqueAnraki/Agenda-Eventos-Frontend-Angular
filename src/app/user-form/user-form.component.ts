@@ -6,6 +6,8 @@ import { FormValidationService } from '../shared/services/form-validation.servic
 import { Location } from '@angular/common';
 import { UserFormService } from './user-form.service';
 import { MessagesService } from '../shared/services/messages.service';
+import { catchError } from 'rxjs/operators';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
 /*
   This component is used to:
@@ -34,7 +36,8 @@ export class UserFormComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private location: Location,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -92,10 +95,18 @@ export class UserFormComponent implements OnInit {
   */
   login() {
     this.authService.login(this.form.value)
+      .pipe(
+        // GraphQL resolvers errors don't get caught in the error interceptor, so we need to handle them in each resquest
+        catchError( (error: any) => {
+          this.errorHandlerService.handleError(error)
+          throw error
+        })
+      )
       .subscribe( (response: any) => {
+        const token = response.data.login.token
         // verify if response has token
-        if (response.token) {
-          this.authService.setToken(response.token)
+        if (token) {
+          this.authService.setToken(token)
           this.router.navigate(['/events'])
         }
       })
@@ -106,6 +117,12 @@ export class UserFormComponent implements OnInit {
   */
   createUser() {
     this.userFormService.createAccount(this.form.value)
+      .pipe(
+        catchError( (error: any) => {
+          this.errorHandlerService.handleError(error)
+          throw error
+        })
+      )
       .subscribe( (res: any) => {
         this.messagesService.showMessage(['Conta criada! Já pode usar a sua agenda!'])
 
